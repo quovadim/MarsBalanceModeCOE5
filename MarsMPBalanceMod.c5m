@@ -1,6 +1,6 @@
-## SaturnsMPBalanceMod
+## MarsMPBalanceMod
 
-icon "SaturnsMPBalanceMod.tga"
+icon "MarsMPBalanceMod.tga"
 description "Bundled With Healthy Starts, this mod makes changes to reflect how I believe the classes should be balanced" 
 #This mod also massively reduces the cost of most t1 rits, some t2 rits and a very few t3 rits, 
 #gem classes got a huge cost reduction across the board, 
@@ -32,25 +32,25 @@ modprio 5 # normal prio
 
 selectclass    1 # baron
 clearrec
-addunitrec  "Spearman"                        100  5   35   0    0
-addunitrec  "Swordsman"                       100  5   35   0   10
-addunitrec  "Crossbowman"                     100  5   35   0    5
+addunitrec  "Spearman"                        100  7   35   0    0
+addunitrec  "Swordsman"                       100  7   35   0   10
+addunitrec  "Crossbowman"                     100  7   35   0    5
 addunitrec  "Heavy Infantry"                  100  5   35   0   25
-addunitrec  "Longbowman"                      100  4   35   0    0
-addunitrec  "Pikeneer"                        100  5   35   0    5
-addunitrec  "Halberdier"                      100  5   35   0    5
-addunitrec  "Zweihander"                      100  5   35   0   10
+addunitrec  "Longbowman"                      100  5   35   0    0
+addunitrec  "Pikeneer"                        100  7   35   0    5
+addunitrec  "Halberdier"                      100  7   35   0    5
+addunitrec  "Zweihander"                      100  7   35   0   10
 addunitrec  "Tower Guard"                     100  5   35   0   15
-addunitrec  "Cavalryman"                      100  3   35   0   20
+addunitrec  "Cavalryman"                      100  5   35   0   20
 addunitrec  "War Dog"                         100  5   15   0    0
-addunitrec  "Ballista"                        100  2   20   0   20
-addunitrec  "Catapult"                        100  1   20   0   25
-addunitrec  "Trebuchet"                       100  1   45   0   35
-addunitrec  "Archer"                           10 10   50   0    0 # once per offer.
-addunitrec  "Crossbowman"                      10 10   50   0    7 # once per offer.
-addunitrec  "Spearman"                         10 10   50   0    0 # once per offer.
-addunitrec  "Swordsman"                        10 10   50   0    7 # once per offer.
-addunitrec  "Trebuchet"                        20  2   65   0   75 # once per offer.
+addunitrec  "Ballista"                        100  3   20   0   20
+addunitrec  "Catapult"                        100  2   20   0   25
+addunitrec  "Trebuchet"                       100  2   45   0   35
+addunitrec  "Archer"                           10 15   50   0    0 # once per offer.
+addunitrec  "Crossbowman"                      10 15   50   0    7 # once per offer.
+addunitrec  "Spearman"                         10 15   50   0    0 # once per offer.
+addunitrec  "Swordsman"                        10 15   50   0    7 # once per offer.
+addunitrec  "Trebuchet"                        20  3   65   0   75 # once per offer.
 addmercrec  "Scout"                            10  1   15  10    0 # once per offer; extra.
 addcomrec   "Baron"                            10      60  10   10 # once per offer; extra.
 reclimiter  "-Baron"                          # Owning a Baron prevents the preceding offer.
@@ -71,9 +71,9 @@ addstartterr 105 # coal mine
 
 clearstartunits
 addstartcom   "High Lord"
-addstartunits "Cavalryman"           10
-addstartunits "Spearman"             9
-addstartunits "Longbowman"           10
+addstartunits "Cavalryman"           15
+addstartunits "Spearman"             30
+addstartunits "Longbowman"           20
 
 selectritual     "Raise Fort"
 cost              0   10 # 10 Gold
@@ -221,19 +221,19 @@ addstartunits "Swordsman"           10
 addstartunits "Crossbowman"         10
 
 selectritual     "Imp Summoning"
-cost              4   5 # 10 Sacrifices
+cost              4   8 # 10 Sacrifices
 
 selectritual     "Demon Summoning"
-cost 			  4   5# your basically getting a single melee troop with shitty chance to succeed, should be cheaper.
+cost 			  4   8# your basically getting a single melee troop with shitty chance to succeed, should be cheaper.
 
 selectritual     "Greater Demon Summoning"
 cost              4   30 # again your usually only getting one unit out of this. the action point cost alone makes this not worth 40 blood.
 
 selectritual     "Infernal Horde"
-cost              4  75 # 150 Sacrifices, HA you only have a 55% chance to succeed not worth 150 fucking blood.
+cost              4  100 # 150 Sacrifices, HA you only have a 55% chance to succeed not worth 150 fucking blood.
 
 selectritual     "Wall of Torment"
-cost              4   10 # 75 Sacrifices, for something that is almost never used... it should be cheap.
+cost              4   25 # 75 Sacrifices, for something that is almost never used... it should be cheap.
 apcost                 1 # should not cost more then one movement, no one wants to sit in a citadel location for something that may never be used.
 
 selectritual     "Summon Demon Lord"
@@ -242,15 +242,15 @@ cost              4  200 # 500 Sacrifices, this is basically a suicide ritual, s
 # Witch
 # initially: 0g 0i 0t 2f; zilch
 # trying to preserve some class identity here
-# now: 5g 1i 0t 4f; 2 farms 1 iron bog
+# now: ??g 1i 1t 4f; 2 farms 1 iron bog
 # initially: 5 spearmen 5 archers
 # now: spearmen to 10 archers to 10
 
 selectclass    4 # witch
 
 clearstartterr
-addstartterr   5 # farm
 addstartterr   6 # farm
+addstartterr  17 # town
 addstartterr  97 # iron bog
 
 clearstartunits
@@ -295,10 +295,10 @@ selectritual     "Ceremony to Baal"
 cost              4   50 # 75 Sacrifices
 
 selectritual     "Blood Feast"
-cost              4   50 # 50 Sacrifice
+cost              4   60 # 50 Sacrifice
 
 selectritual     "Grand Blood Feast"
-cost              4  75 # 150 Sacrifices
+cost              4  125 # 150 Sacrifices
 
 # Bakemono
 # initially: 3g 2i 0t 0s; 1 coal mine
@@ -552,7 +552,7 @@ magicshield
 # Druid
 # initially: 2g 0i 0t 4herbs; 2 farms
 # barechested men gotta come from somewhere
-# now: 7g 0i 0t 3herbs; 1 farm 2 villages
+# now: ??g 0i 1t 3herbs; 1 farm 2 villages
 # initially: 10 warriors 5 slingers 1 scout
 # now: slingers to 10
 
@@ -560,7 +560,7 @@ selectclass   10 # druid
 
 clearstartterr
 addstartterr   5 # farm
-addstartterr  18 # village
+addstartterr  17 # town
 addstartterr  18 # village
 
 clearstartunits
@@ -1489,6 +1489,35 @@ addstartcom   "Cultist of the Deep"
 addstartunits "Spearman"            10
 addstartunits "Crossbowman"         10
 
+selectritual     "Call of the Deep"
+cost              4   5 # 10 Sacrifices
+
+selectritual     "Call Warriors of the Deep"
+cost              4   12 # 25 Sacrifices
+
+selectritual     "Contact Elder Being"
+cost              4   15 # 30 Sacrifices
+
+selectritual     "Astrology"
+cost              4   1 # 5 Sacrifices
+
+selectritual     "Ceremony in the Deep"
+cost              4   10 # 10 Sacrifices, no change, but a stub here
+
+selectritual     "Greater Ceremony in the Deep"
+cost              4   40 # 40 Sacrifices, no change, but a stub here
+
+selectritual     "Call Army of the Deep"
+cost              4   40 # 75 Sacrifices
+
+selectritual     "Contact Old Ones"
+cost              4   75 # 100 Sacrifices
+
+selectritual     "Deep Rising"
+cost              4   125 # 100 Sacrifices, yeah, that's a nerf
+
+selectritual     "Call Outer God"
+cost              4   225 # 200 Sacrifices, yeah, that's a nerf
 
 # Dwarf Queen
 # initially: 6g 6i 0t 2diamonds 1emerald; zilch
@@ -1894,60 +1923,60 @@ selectritual     "Create Primal Forest"
 cost              2  75 # 1000 Herbs
 
 selectmonster "Hamadryad"
-harpyspawn 20
+harpyspawn 10
 
 selectmonster "Dryad"
-satyrspawn 10
+satyrspawn 5
 
 selectmonster "Dryad Queen"
-satyrspawn 15
+satyrspawn 7
 
 selectmonster "Anointed of Gaia"
-satyrspawn 20
+satyrspawn 10
 
 selectmonster "Satyr Commander"
 satyrspawn 10
 
 selectmonster "Hoplite Commander"
-satyrspawn 20
+satyrspawn 10
 
 selectmonster "Centaur Commander"
 centspawn 10
 selectmonster "Cataphract Commander"
-centspawn 20
+centspawn 10
 selectmonster "Keeper of Traditions"
 minospawn 10
 selectmonster "Minotaur Lord"
-minospawn 20
+minospawn 10
 selectmonster "Hierophant"
-centspawn 20
+centspawn 10
 selectmonster "Centaur Sage"
-centspawn 20
+centspawn 10
 selectmonster "Hierophantide"
-centspawn 15
+centspawn 8
 selectmonster "Grand Hierophantide"
-centspawn 20
+centspawn 10
 selectmonster "Harpy Queen"
-harpyspawn 20
-selectmonster "Pan"
 harpyspawn 10
-satyrspawn 10
+selectmonster "Pan"
+harpyspawn 5
+satyrspawn 5
 centspawn 5
 minospawn 5
 selectmonster "Elder Pan"
-harpyspawn 15
-satyrspawn 20
+harpyspawn 7
+satyrspawn 15
 centspawn 5
 minospawn 5
 selectmonster "Pandemoniac"
-harpyspawn 15
-satyrspawn 15
+harpyspawn 10
+satyrspawn 10
 centspawn 5
-minospawn 15
+minospawn 10
 selectmonster "Panic Apostate"
-harpyspawn 15
-satyrspawn 20
-centspawn 10
+harpyspawn 10
+satyrspawn 10
+centspawn 7
 minospawn 7
 
 # Scourge Lord
@@ -2001,18 +2030,18 @@ addstartunits "Airya Spearman"      10
 addstartunits "Airya Archer"        10
 
 selectritual     "Diamond Alchemy"
-cost              7   5 # 10 Rubies
-cost              8   5 # 10 Sapphires
-cost             10   5 # 10 Emeralds
+cost              7   7 # 10 Rubies
+cost              8   7 # 10 Sapphires
+cost             10   7 # 10 Emeralds
 
 selectritual     "Lesser Sky Summoning"
-cost              9   5 # 25 Diamonds
+cost              9   9 # 25 Diamonds
 
 selectritual     "Greater Sky Summoning" 
 cost              9   30 # 50 Diamonds
 
 selectritual     "Summon Storm Giant"
-cost              9   50 # 75 Diamonds
+cost              9   75 # 75 Diamonds
 
 selectritual     "Summon Mist Warrior" 2
 cost              9   20 # 25 Diamonds
@@ -2026,7 +2055,7 @@ cost              9  75 # 125 Diamonds
 
 selectritual     "Summon Solar Eagle"
 cost              9   25 # 25 Diamonds
-cost              7   30 # 50 Rubies
+cost              7   40 # 50 Rubies
 
 selectritual     "Summon Frost Giant"
 cost              8   50 # 75 Sapphires
