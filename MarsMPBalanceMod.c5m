@@ -1508,16 +1508,16 @@ selectritual     "Greater Ceremony in the Deep"
 cost              4   40 # 40 Sacrifices, no change, but a stub here
 
 selectritual     "Call Army of the Deep"
-cost              4   40 # 75 Sacrificesn
+cost              4   40 # 75 Sacrifices
 
 selectritual     "Contact Old Ones"
-cost              4   75 # 100 Sacrificesn
+cost              4   75 # 100 Sacrifices
 
 selectritual     "Deep Rising"
-cost              4   125 # 100 Sacrificesn, yeah, that's a nerf
+cost              4   125 # 100 Sacrifices, yeah, that's a nerf
 
 selectritual     "Call Outer God"
-cost              4   225 # 200 Sacrificesn, yeah, that's a nerf
+cost              4   225 # 200 Sacrifices, yeah, that's a nerf
 
 # Dwarf Queen
 # initially: 6g 6i 0t 2diamonds 1emerald; zilch
