@@ -1,0 +1,2290 @@
+## SaturnsMPBalanceMod
+
+icon "SaturnsMPBalanceMod.tga"
+description "Bundled With Healthy Starts, this mod makes changes to reflect how I believe the classes should be balanced" 
+#This mod also massively reduces the cost of most t1 rits, some t2 rits and a very few t3 rits, 
+#gem classes got a huge cost reduction across the board, 
+#some of the weaker classes also got some major cost reductions such as dryad queen and dwarf queen. 
+#enchanter had ALL of its ap costs removed. 
+#Bane fire archers got a slight nerf so their bane fire doesn't ALWAYS proc, 
+#tzmitz lost their armor pen and paralyzation.
+#Yogi and Barb get their casters turn one as well. 
+#Voice of El's free spawn is now semi stupid and are guarnteed t1 conversion
+#Troll King gets a goblin shaman
+
+#if you want more details you can find the mod data here: \Steam\steamapps\workshop\content\1606340\3067988540\ 
+#(I recommend notepad++ for viewing the file)
+
+#I felt like, specifically when playing blood maps (which are the go to choice in mp) most gem classes get scuffed. so this mod is meant to fix that, I also wanted to make t1 rituals used more alongside other rituals I felt were underutilized in multiplayer..."
+modprio 5 # normal prio
+
+# This was ripped from healthy starts so most of the comments come from that such as:  -big thanks as always to marlin + dracula. their work really enabled the creation of a lot of shit
+
+#####
+
+
+# Baron
+# initially: 6g 0i 0t (x 1.25 for gold and iron means 8g); 2 farms 1 hamlet
+# smaller bump than most. making baron feel a little bit manorial i guess
+# now: 8g 1i 0g (10g); 2 farms 1 coal mine
+# initially: 5 cavalrymen 5 spearmen 5 longbowmen
+# now: longbowmen to 8
+
+selectclass    1 # baron
+clearrec
+addunitrec  "Spearman"                        100  5   35   0    0
+addunitrec  "Swordsman"                       100  5   35   0   10
+addunitrec  "Crossbowman"                     100  5   35   0    5
+addunitrec  "Heavy Infantry"                  100  5   35   0   25
+addunitrec  "Longbowman"                      100  4   35   0    0
+addunitrec  "Pikeneer"                        100  5   35   0    5
+addunitrec  "Halberdier"                      100  5   35   0    5
+addunitrec  "Zweihander"                      100  5   35   0   10
+addunitrec  "Tower Guard"                     100  5   35   0   15
+addunitrec  "Cavalryman"                      100  3   35   0   20
+addunitrec  "War Dog"                         100  5   15   0    0
+addunitrec  "Ballista"                        100  2   20   0   20
+addunitrec  "Catapult"                        100  1   20   0   25
+addunitrec  "Trebuchet"                       100  1   45   0   35
+addunitrec  "Archer"                           10 10   50   0    0 # once per offer.
+addunitrec  "Crossbowman"                      10 10   50   0    7 # once per offer.
+addunitrec  "Spearman"                         10 10   50   0    0 # once per offer.
+addunitrec  "Swordsman"                        10 10   50   0    7 # once per offer.
+addunitrec  "Trebuchet"                        20  2   65   0   75 # once per offer.
+addmercrec  "Scout"                            10  1   15  10    0 # once per offer; extra.
+addcomrec   "Baron"                            10      60  10   10 # once per offer; extra.
+reclimiter  "-Baron"                          # Owning a Baron prevents the preceding offer.
+addcomrec   "High Lord"                        20      50  10   10 # once per offer; extra.
+addcomrec   "Captain"                          20      40  10    0 # once per offer; extra.
+addcomrec   "Monk"                              7      50  10    0 # once per offer; extra.
+templerec                                     # +3% to chance per temple owned, to a max of +15% for 5+ temples.
+addcomrec   "Court Mage"                        6      40  15    0 # once per offer; extra.
+libraryrec                                    # +2% to chance per library point owned, to a max of +20% for 10+ library points.
+addcomrec   "Alchemist"                         6      40  15    0 # once per offer; extra.
+libraryrec        
+
+
+clearstartterr
+addstartterr   5 # farm
+addstartterr   6 # farm
+addstartterr 105 # coal mine
+
+clearstartunits
+addstartcom   "High Lord"
+addstartunits "Cavalryman"           10
+addstartunits "Spearman"             9
+addstartunits "Longbowman"           10
+
+selectritual     "Raise Fort"
+cost              0   10 # 10 Gold
+
+selectritual "Appoint Vassal"
+level 9
+
+newritual     "Appoint Vassal"                                        # 319
+descr "The Baron appoints one of his knights as a vassal to steward and defend a Motte and Bailey. The fort will no longer produce units for the Baron, but for the Vassal instead. The yearly conscription is increased to one Knight, two soldiers and two archers. The Vassal and his troops will move independently and will occasionally try to conquer surrounding settlements and mines."
+ritpow                 6 # Baron
+level                  2
+cost              0   10 # 10 Gold
+terr                 199 # Required terrain: Motte and Bailey.
+nomonhomereq             # Monsters in strings beginning with "(-)" must not have their home at target location.
+aialways             100 # AI will always try to cast this ritual if it currently can, but it will not make long term plans to do so.
+promotion             -1 # Promote 1 unit to a commander and make it the target unit. Valid promotions are in paired strings not beginning with "(+)", "(-)", "(&)", or "|".
+updatehome               # Updates home (immortal resurrection location) for target unit to where he stands.
+free                     # Always start with this ritual in addition to the others.
+addstring     "(-)Vassal Knight "     # This string will only be used by nomon[...] commands.
+addstring     "Knight"
+addstring     "Vassal Knight "
+
+newmonster "Vassal Knight "
+copystats "Vassal Knight"
+copyspr "Vassal Knight"
+wandermaxdist 999
+wanderattack -2
+aggressive
+wanderrest 25
+rank -1
+spawnmon 250
+
+newmonster "Retainer"
+copystats "Spearman"
+copyspr "Spearman"
+stupid
+
+newmonster "Retainer"
+copystats "Archer"
+copyspr "Archer"
+stupid
+
+newmonster "Retainer"
+copystats "Swordsman"
+copyspr "Swordsman"
+stupid
+
+newmonster "Retainer"
+copystats "Longbowman"
+copyspr "Longbowman"
+stupid
+
+newmonster "Retainer"
+copystats "Knight"
+copyspr "Knight"
+stupid
+loner
+wanderattack -1
+wander 18
+
+
+# Necromancer
+# initially: 1g 0i 0t 3hands; 1 farm 1 gallows
+# lets get this guy some peasants to terrorize
+# now: 5g 0i 0t 3hands; 1 hamlet 1 gallows
+# initially: 10 spearmen 5 archers
+# now: archers to 10
+
+selectclass    2 # necromancer
+
+clearstartterr
+addstartterr   18 # Village
+
+clearstartunits
+addstartcom   "Necromancer's Apprentice"
+addstartunits "Spearman"            10
+addstartunits "Archer"              10
+
+selectritual     "Stygian Paths"
+cost              5   75 # 25 Hands
+
+selectritual     "Planar Swap"
+cost 5 250 # this is basically an army nuke
+
+selectritual     "Animate Abomination"
+cost              5   20
+cost             17   50 # 50 Corpses
+
+selectritual     "Pyramid of Skulls"
+cost              5   10
+cost             14   25 # 25 Corpses (humanoid)
+
+selectritual     "Wall of Unlife"
+cost              5   5
+
+selectritual     "Ravenous Curse" 
+cost              5   5 # 40 Hands
+
+selectritual     "Raise Legion"
+cost              5  50 # 100 Hands
+
+selectritual     "Dark Knowledge"
+cost              5 0 # 3 Hands
+
+selectritual     "Minor Summoning"
+cost              5   5 # 10 Hands
+
+newweapon     "Bane Fire Bow[NERFED]"                                             # 696
+trgrank              1 # Target: front enemy (any enemy in range, preferring front-most).
+range                5
+init                 2
+dmgtype              3 # Pierce.
+dmg                  3 # Base damage (added to dmg value where this weapon is used).
+aoe                  0 # Area: single target.
+arrow                  # Can be negated by air shield.
+lob                    # Arcing trajectory.
+rangepen               # Does half damage if distance >= half range.
+flymode              1 # Missile sprite, one for each strike or square hit.
+flysound            14 # pil.smp (Bow)
+nextwep      697 # Extra effect if target is hit: 697: Bane Fire.
+nextdmg              2 # d2 Magic damage.
+
+selectmonster    "Bane Fire Archer" 
+clearweapons
+rangedweapon               0 "Bane Fire Bow[NERFED]" # Bane Fire Bow: d3 Pierce damage.
+meleeweapon                0   0 # Fist: d1 Blunt damage.
+
+# Demonologist
+# initially: 6g 0i 0t 1s; 2 farms 1 hamlet
+# hes got nice troops, lets make him a bit more connected. demons are good for business.
+# now: 11g 0i 1t 4s; 1 farm 1 hamlet 1 market village
+# initially: 8 swordsmen 5 crossbowmen
+# now: swordsmen to 10 crossbowmen to 10
+
+selectclass    3 # demonologist
+
+clearstartterr
+addstartterr   6 # farm
+addstartterr   7 # hamlet
+addstartterr 206 # market village
+
+clearstartunits
+addstartcom   "Cultist"
+addstartunits "Swordsman"           10
+addstartunits "Crossbowman"         10
+
+selectritual     "Imp Summoning"
+cost              4   5 # 10 Sacrifices
+
+selectritual     "Demon Summoning"
+cost 			  4   5# your basically getting a single melee troop with shitty chance to succeed, should be cheaper.
+
+selectritual     "Greater Demon Summoning"
+cost              4   30 # again your usually only getting one unit out of this. the action point cost alone makes this not worth 40 blood.
+
+selectritual     "Infernal Horde"
+cost              4  75 # 150 Sacrifices, HA you only have a 55% chance to succeed not worth 150 fucking blood.
+
+selectritual     "Wall of Torment"
+cost              4   10 # 75 Sacrifices, for something that is almost never used... it should be cheap.
+apcost                 1 # should not cost more then one movement, no one wants to sit in a citadel location for something that may never be used.
+
+selectritual     "Summon Demon Lord"
+cost              4  200 # 500 Sacrifices, this is basically a suicide ritual, soooo it should not cost 500 sacs..
+
+# Witch
+# initially: 0g 0i 0t 2f; zilch
+# trying to preserve some class identity here
+# now: 5g 1i 0t 4f; 2 farms 1 iron bog
+# initially: 5 spearmen 5 archers
+# now: spearmen to 10 archers to 10
+
+selectclass    4 # witch
+
+clearstartterr
+addstartterr   5 # farm
+addstartterr   6 # farm
+addstartterr  97 # iron bog
+
+clearstartunits
+addstartcom   "Witch's Apprentice"
+addstartunits "Androphag Spearman"  10
+addstartunits "Androphag Archer"    10
+
+selectritual     "Minor Summoning" 1
+cost              3   5 # 15 Fungus, the units are shit and the cost is a joke, this is more about action point cost then it is the resources.
+
+selectritual     "Swamp Guardians"
+cost              3   2 # 10 Fungus, again ap cost, combined with... who is actually going to use this?
+
+selectritual     "Murderous Mist"
+cost              3  20 # 100 Fungus, underused ritual so I made it cheaper.
+
+# High Priestess
+# initially: 5g 0i 0t 2s; 1 village
+# now: 9g 0i 0t 3s; 1 farm 1 hamlet 1 village
+# initially: 10 spearmen 5 archers
+# now: archers to 10
+
+selectclass    5 # high priestess
+
+clearstartterr
+addstartterr   5 # farm
+addstartterr   7 # hamlet
+addstartterr  18 # village
+
+clearstartunits
+addstartcom   "Hierodule"
+addstartunits "Ba'alite Spearman"   10
+addstartunits "Ba'alite Archer"     10
+
+selectritual     "Lesser Ceremony to Baal" 
+cost              4   5 # 10 Sacrifices
+
+selectritual     "Lesser Blood Feast"
+cost              4   1 # 15 Sacrifices
+
+selectritual     "Ceremony to Baal"
+cost              4   50 # 75 Sacrifices
+
+selectritual     "Blood Feast"
+cost              4   50 # 50 Sacrifice
+
+selectritual     "Grand Blood Feast"
+cost              4  75 # 150 Sacrifices
+
+# Bakemono
+# initially: 3g 2i 0t 0s; 1 coal mine
+# sorceror had to start doing the blood stuff somewhere
+# now: 7g 2i 0t 2s; 1 farm 1 village 1 coal mine
+# initially: 10 spearmen 10 shos 6 bowmen
+# now: bowmen to 12
+
+selectclass    6 # bakemono
+
+clearstartterr
+addstartterr   5 # farm
+addstartterr  18 # village
+addstartterr 105 # coal mine
+
+clearstartunits
+addstartcom   "Bakemono General"
+addstartunits "Bakemono Spearman"   10
+addstartunits "Bakemono Sho"        10
+addstartunits "Bakemono Bowman"     12
+
+selectritual     "Summon Lesser Oni"
+cost              4   10 # 30 Sacrifices
+
+selectritual     "Summon Greater Beings"
+cost              4  75 # 100 Sacrifices
+
+selectritual     "Summon Oni"
+cost              4  75 # 100 Sacrifices
+
+selectritual     "Mountain Lair"
+cost              4   10 # 25 Sacrifices
+cost              1   20 # 50 Iron
+
+selectritual     "Make Effigy" 1
+cost              4    1 # 5 Sacrifices
+
+# Barbarian
+# initially: 1g 0i 0t; zilch
+# again trying to preserve some class identity. hm. i think im just gonna make the barbarian camp better
+# later update: barb mod doesnt work so well with this so it gets toned down and they get a town now
+# now: 7g 1i 2t; 1 village 1 old battlefield 1 iron bog
+# initially: 20 warriors 5 cavalries 5 bowmen
+# now: cavalries to 8 bowmen to 8
+
+selectclass    7 # barbarian
+
+clearstartterr
+addstartterr  17 # town
+addstartterr  19 # old battlefield
+addstartterr  97 # iron bog
+
+clearstartunits
+addstartcom   "Spirit Guide"
+addstartcom   "Mounted Chief"
+addstartunits "Barbarian Warrior"   20
+addstartunits "Barbarian Cavalry"    8
+addstartunits "Barbarian Bowman"     8
+addstartunits "Warrior Totem"
+
+selectritual     "Make Effigy"
+cost              2   5
+
+selectritual     "Summon Ancestor"
+cost              2   8 # 50 Herbs
+
+selectritual     "Summon Heroes of Old"
+cost              2  200 # 300 Herbs
+
+selectritual     "Army of Legends"
+cost              2  750 # 300 Herbs
+
+selectritual     "Carve Totempole"
+cost              2  50 # 300 Herbs
+
+selectritual     "Paint Tattoo"
+cost              2   10 # 10 Herbs
+selectritual     "Paint Tattoo" 1
+cost              2   10 # 10 Herbs
+selectritual     "Paint Tattoo" 2
+cost              2   10 # 10 Herbs
+selectritual     "Paint Tattoo" 3
+cost              2   10 # 10 Herbs
+
+selectritual     "Design Eagle Tattoo"
+cost              2  100 # 200 Herbs 
+selectritual     "Design Pegasus Tattoo"
+cost              2  50 # 500 Herbs
+selectritual     "Design Lion Tattoo"
+cost              2  50 # 200 Herbs
+selectritual     "Design Gryphon Tattoo"
+cost              2  50 # 500 Herbs
+selectritual     "Design Badger Tattoo"  
+cost              2  50 # 200 Herbs
+selectritual     "Design Skull Tattoo"
+cost              2  150 # 500 Herbs
+selectritual     "Design Serpent Tattoo" 
+cost              2  50 # 200 Herbs
+selectritual     "Design Hydra Tattoo" 
+cost              2  250 # 500 Herbs
+
+# Senator
+# initially: 6g 0i 1t (x 1.5 for gold and trade means 9g); 1 town
+# now: 7g 1i 1t (10g); 1 farm 1 town 1 abandoned mine
+# initially: 5 principes 10 hastati 10 velites
+# now: velites to 15. senators starting army is already very competent
+
+selectclass    8 # senator
+
+clearstartterr
+addstartterr   6 # farm
+addstartterr  17 # town
+addstartterr 332 # abandoned mine
+
+clearstartunits
+addstartcom   "Centurion"
+addstartunits "Princeps"             5
+addstartunits "Hastatus"            10
+addstartunits "Veles"               15
+
+clearrec
+addunitrec  "Veles"                           100  5   20   0    0
+addunitrec  "Hastatus"                        100  5   25   0    2
+addunitrec  "Princeps"                        100  5   25   0    5
+addunitrec  "Princeps Solaris"                100  5   30   0    5
+reclimiter  "+Leo"                            # Owning a Leo enables the preceding offer.
+addunitrec  "Triarius"                        100  5   25   0   10
+addunitrec  "Praetorian Guard"                100  5   30   0   10
+reclimiter  "+Emperor"                        # Owning a Emperor enables the preceding offer.
+reclimiter  "+God Emperor"                    # Owning a God Emperor enables the preceding offer.
+reclimiter  "+Dark Emperor"                   # Owning a Dark Emperor enables the preceding offer.
+reclimiter  "+God Emperor of the Underworld"  # Owning a God Emperor of the Underworld enables the preceding offer.
+addunitrec  "Ballista"                        100  2   25   0   50
+addunitrec  "Hastatus"                          5 10   55   0    5 # once per offer.
+addmercrec  "Standard"                        100  1   20   0    0 # once per offer; extra.
+addmercrec  "Archer"                           20  5   25   0    0 # once per offer; extra.
+addmercrec  "Gladiator"                        20  2   10   0    0 # once per offer; extra.
+addmercrec  "Retiarius"                        -1  2   10   0    0 # once per offer; extra; ignores chance and is offered when previous offer is.
+addcomrec   "Senator"                          10      50  10    0 # once per offer; extra.
+reclimiter  "-Senator"                        # Owning a Senator prevents the preceding offer.
+reclimiter  "-Emperor"                        # Owning a Emperor prevents the preceding offer.
+reclimiter  "-God Emperor"                    # Owning a God Emperor prevents the preceding offer.
+reclimiter  "-Dark Emperor"                   # Owning a Dark Emperor prevents the preceding offer.
+reclimiter  "-God Emperor of the Underworld"  # Owning a God Emperor of the Underworld prevents the preceding offer.
+addcomrec   "Centurion"                        25      35  10    0 # once per offer; extra.
+addcomrec   "Leo"                               8      50  20    0 # once per offer; extra.
+addcomrec   "Heliodromus"                       3      90  20    0 # once per offer; extra.
+libraryrec                                    # +1% to chance per library point owned, to a max of +10% for 10+ library points.
+addcomrec   "Renata"                            8      50  20    0 # once per offer; extra.
+addcomrec   "Renatus"                           4     110  20    0 # once per offer; extra.
+libraryrec                                    # +1% to chance per library point owned, to a max of +10% for 10+ library points.
+addcomrec   "Serpent Acolyte"                   8      50  20    0 # once per offer; extra.
+templerec                                     # +3% to chance per temple owned, to a max of +15% for 5+ temples.
+addcomrec   "Serpent Priest"                    2      90  20    0 # once per offer; extra.
+templerec                                     # +2% to chance per temple owned, to a max of +10% for 5+ temples.
+addcomrec   "Reveler"                           6      50  20    0 # once per offer; extra.
+addcomrec   "Augur"                             4      60  20    0 # once per offer; extra.
+addmercrec  "Scout"                            10  1   15  10    0 # once per offer; extra.
+
+selectritual     "Coronation"
+terr                 -113 # cities
+cost 0 300
+
+selectritual     "Imperial Wedding"
+terr                 -113 # cities
+cost              0  100 # 400 Gold
+
+selectritual     "Erect Statue"
+cost              0  50 # 100 Gold
+
+selectritual     "Erect Statue" 1
+cost              0  50 # 100 Gold
+
+selectritual     "Erect Statue of the Underworld"
+cost              0  50 # 100 Gold
+
+selectritual     "Erect Imperial Statue" 
+cost              0  50 # 100 Gold
+
+selectritual     "Apotheosis"
+cost              0 100 # 1000 Gold
+
+selectritual     "Apotheosis" 1
+cost              0 100 # 1000 Gold
+
+selectritual     "Apotheosis" 2
+cost              0 100 # 1000 Gold
+
+# Pale One
+# initially: 2g 2i 0t 2gems; 1 deep earth iron deposit
+# theyre mostly into bronze really
+# now: 9g 3i 0t 2-4gems; 1 deep earth silver deposit 2 crystal forests
+# 5 soldiers 8 pale ones 2 slingers
+# now: slingers to 8
+
+selectclass    9 # pale one
+
+clearstartterr
+addstartterr 186 # deep earth silver deposit
+addstartterr 196 # crystal forest
+addstartterr 196 # crystal forest
+
+clearstartunits
+addstartcom   "Earth Reader"
+addstartunits "Pale One Soldier"     5
+addstartunits "Pale One"             8
+addstartunits "Pale One Slinger"     8
+
+selectritual     "Awaken Guardians"
+cost             10   7 # 20 Emeralds
+
+selectritual     "Lesser Lava Summoning"
+cost              7   5 # 10 Rubies
+
+selectritual     "Lesser Deep Summoning"
+cost             10   2 # 10 Emeralds
+
+selectritual     "Lesser Summoning of the Dead" 
+cost              9   1 # 10 Diamonds
+
+selectritual     "Olm Conclave"
+cost              8  100 # 120 Sapphires
+
+selectritual     "Summoning of the Dead"
+cost              9   60 # 80 Diamonds
+
+selectritual     "Lava Summoning"
+cost              7   40 # 80 Rubies
+
+selectritual     "Deep Earth Summoning"
+cost             10   45 # 80 Emeralds
+
+selectritual     "Awaken Marble Oracle"
+cost             10   30 # 80 Emeralds 
+
+selectritual     "Awaken Onyx Oracle"
+cost             10  80 # 240 Emeralds
+
+selectritual     "Earth made Flesh"
+cost             10  160 # 480 Emeralds
+
+selectmonster "King Of The Deep"
+clearspec
+coldres 50
+fireres 50
+badsight
+huge
+water
+magicshield
+
+# Druid
+# initially: 2g 0i 0t 4herbs; 2 farms
+# barechested men gotta come from somewhere
+# now: 7g 0i 0t 3herbs; 1 farm 2 villages
+# initially: 10 warriors 5 slingers 1 scout
+# now: slingers to 10
+
+selectclass   10 # druid
+
+clearstartterr
+addstartterr   5 # farm
+addstartterr  18 # village
+addstartterr  18 # village
+
+clearstartunits
+addstartcom   "Druid's Apprentice"
+addstartunits "Venus Trap" 5
+addstartunits "Barechested Warrior" 10
+addstartunits "Barechested Slinger" 10
+addstartunits "Barechested Scout"    1
+
+selectritual      "Minor Animal Summoning"
+cost              2   5 # 15 Herbs
+
+selectritual     "Plant Forest Guardians"
+cost              2   5 # 15 Herbs
+apcost                0 #
+
+selectritual     "Unification"
+cost              2  50 # 150 Herbs
+
+selectritual      "Major Animal Summoning"
+cost              2   25 # 75 Herbs
+
+selectritual     "Summon Mythic Beasts"
+cost              2  50 # 100 Herbs
+
+selectritual     "Heart of the Forest"
+cost              2  100 # 150 Herbs
+
+selectritual     "Lord of the Wild"
+cost              2  75 # 100 Herbs
+
+selectritual     "Wild Hunt"
+cost              2  150 # 300 Herbs
+
+selectritual     "Revive Ancient Forest"
+cost              2  60 # 350 Herbs
+
+selectritual     "Summon Legendary Beings"
+cost              2  300 # 450 Herbs
+
+selectritual     "Shepherds of the Wood"
+cost              2  250 # 300 Herbs
+
+# Burgmeister
+# initially: 6g 0i 1t 3w; 1 farm 1 hoburg village
+# lets add a little industry
+# now: 10g 2i 1t 3w; 1 hamlet 1 hoburg village 1 iron mine
+# initially: 5 defenders 10 soldiers 10 crossbows
+# now: crossbows to 15. youre slow. you deserve it
+
+selectclass   11 # burgmeister
+
+clearstartterr
+addstartterr   7 # hamlet
+addstartterr  14 # iron mine
+addstartterr  70 # hoburg village
+
+clearstartunits
+addstartcom   "Hogmeister"
+addstartunits "Hoburg Defender"      5
+addstartunits "Hoburg Soldier"      10
+addstartunits "Hoburg Crossbow"     15
+
+selectritual     "Emerald Construct"
+cost             10   5 # 20 Emeralds
+selectritual     "Sapphire Construct"
+cost              8   10 # 20 Sapphires
+selectritual     "Ruby Construct"
+cost              7   10 # 20 Rubies
+
+selectritual     "Ruby Iron Dragon"
+cost              7  60 # 150 Rubies
+selectritual     "Sapphire Iron Dragon"
+cost              8  60 # 150 Sapphires
+selectritual     "Diamond Iron Dragon"
+cost              9  60 # 150 Diamonds
+selectritual     "Emerald Iron Dragon"
+cost             10  60 # 150 Emeralds
+
+selectritual     "Construct Ferrous Wheel"
+cost              7   5 # 10 Rubies
+cost              8   5 # 10 Sapphires
+cost             10   5 # 10 Emeralds
+cost              9   5 # 10 Diamonds
+
+# Warlock
+# initially: 2g 0i 0t 2gems; zilch
+# now: 8g 0i 1t 2gems; 2 farms 1 town
+# initially: 12 spearmen 5 archers
+# now: spearmen to 10 archers to 10
+
+selectclass   12 # warlock
+
+clearstartterr
+addstartterr   5 # farm
+addstartterr   6 # farm
+addstartterr  17 # town
+
+clearstartunits
+addstartcom   "Warlock's Apprentice"
+addstartunits "Spearman"            10
+addstartunits "Archer"              10
+
+selectritual     "Lesser Fire Summoning"
+cost              7   8 # 25 Rubies
+selectritual     "Lesser Water Summoning"
+cost              8   8 # 25 Sapphires
+selectritual     "Lesser Air Summoning"
+cost              9   15 # 25 Diamonds
+selectritual     "Lesser Earth Summoning"
+cost             10   10 # 25 Emeralds
+
+selectritual     "Greater Fire Summoning"
+cost              7   37 # 56 Rubies
+
+selectritual     "Circle of Flames"
+cost              7    0 # 6 Rubies
+
+selectritual     "Vafur Flames" 
+cost              7   3 # 28 Rubies
+
+selectritual     "Summon Magma Warrior"
+cost              7   10 # 28 Rubies
+cost             10   10 # 28 Emeralds
+
+selectritual     "Summon Magma Warrior" 1
+cost              7   10 # 28 Rubies
+cost             10   10 # 28 Emeralds
+
+selectritual     "Summon Smoke Warrior"
+cost              7   20 # 28 Rubies
+cost              9   20 # 28 Diamonds
+
+selectritual     "Summon Smoke Warrior" 1
+cost              7   20 # 28 Rubies
+cost              9   20 # 28 Diamonds
+
+selectritual     "Greater Water Summoning"
+cost              8   37 # 56 Sapphires
+
+selectritual     "Summon Yeti"
+cost              8   10 # 28 Sapphires
+cost              9   10 # 28 Diamonds
+
+selectritual     "Summon Yeti" 1
+cost              8   10 # 28 Sapphires
+cost              9   10 # 28 Diamonds
+
+selectritual     "Summon Mist Warrior" 1
+cost              8   20 # 28 Sapphires
+cost              9   20 # 28 Diamonds
+
+selectritual      "Summon Mist Warrior"
+cost              8   20 # 28 Sapphires
+cost              9   20 # 28 Diamonds
+
+selectritual     "Summon Mud Warrior"
+cost              8   20 # 28 Sapphires 
+cost             10   20 # 28 Emeralds
+
+selectritual     "Summon Mud Warrior" 1
+cost              8   20 # 28 Sapphires 
+cost             10   20 # 28 Emeralds
+
+selectritual     "Enchant Lake" 
+cost              8   3 # 23 Sapphires
+
+selectritual     "Greater Air Summoning"
+cost              9   37 # 56 Diamonds
+
+selectritual     "Curtain of Storms"
+cost              9   1 # 28 Diamonds
+
+selectritual     "Greater Earth Summoning"
+cost             10   37 # 56 Emeralds
+
+selectritual     "Ramparts of Earth" 
+cost             10   1 # 12 Emeralds
+
+selectritual     "Dig"
+cost             10   1 # 12 Emeralds
+
+selectritual     "Wheel of Frost and Flames"
+cost              7   37 # 50 Rubies
+cost              8   37 # 50 Sapphires
+
+selectritual     "Eternal Pyre"
+cost              7  100 # 125 Rubies
+
+selectritual     "Wheel of Frost and Flames"
+cost              8   37 # 50 Sapphires
+cost              7   37 # 50 Rubies
+
+selectritual     "Fimbul Fortress"
+cost              8  10 # 125 Sapphires
+
+selectritual     "Fimbul Fortress" 1
+cost              8  10 # 125 Sapphires
+
+selectritual     "Wheel of Storm and Stone"
+cost              9   37 # 50 Diamonds
+cost             10   37 # 50 Emeralds
+
+selectritual     "Perpetual Storm"
+cost              9  107 # 157 Diamonds
+
+selectritual     "Cloud Castle"
+cost              9  150 # 188 Diamonds
+
+selectritual     "Wheel of Storm and Stone"
+cost             10   37 # 50 Emeralds
+cost              9   37 # 50 Diamonds
+
+selectritual     "Wizard's Tower"
+cost             10  60 # 125 Emeralds
+
+selectritual     "Raise Volcano"
+cost             10   53 # 63 Emeralds
+cost              7   22 # 32 Rubies
+
+selectritual     "King of Giants"
+cost              7  50 # 100 Rubies
+
+selectritual     "King of Giants" 1
+cost              8  50 # 100 Sapphires
+
+selectritual     "King of Giants" 2
+cost              8  50 # 100 Sapphires
+
+selectritual     "King of Giants" 3
+cost              9  50 # 100 Diamonds
+
+selectritual     "King of Giants" 4
+cost             10  50 # 100 Emeralds
+
+selectritual     "Call Winter Wolves"
+cost              8   10 # 25 Sapphires
+
+selectritual     "Create Artifact" 1
+cost              0   15 # 25 Gold
+cost             15   15 # 25 Gems
+
+#Might reduce queens and kings later not sure...
+
+# Priest King
+# initially: 4g 0i 1t 3s; 1 farm
+# it takes more than 1 farm to support a murder city-state
+# now: 9g 0i 1t 5s; 3 farms
+# initially: 10 jungle 10 tribal
+# now: jungle warriors 15 tribal warriors to 15
+
+selectclass   13 # priest king
+
+clearstartterr
+addstartterr   5 # farm
+addstartterr   5 # farm
+addstartterr   6 # farm
+
+clearstartunits
+addstartcom   "Tribal King"
+addstartunits "Jungle Warrior"      15
+addstartunits "Tribal Warrior"      15
+
+selectritual     "Ceremony of the Lord of Sky"
+cost              4   5 # 25 Sacrifices, the units this gets you ARE NOT WORTH 25 sacs.
+
+selectritual     "Ceremony of the Lord of Sky" 1
+cost              4   5 # 25 Sacrifices, the units this gets you ARE NOT WORTH 25 sacs.
+
+selectritual     "Ceremony of the Lord of Rain"
+cost              4   15 # 25 Sacrifices, units are shit but it can get you a commander.  
+
+selectritual     "Ceremony of the Lord of Rain" 1
+cost              4   15 # 25 Sacrifices, units are shit but it can get you a commander.  
+
+selectritual     "Ceremony of the Lord of War"
+cost              4   5 # 25 Sacrifices, the units this gets you ARE NOT WORTH 25 sacs.
+
+selectritual     "Ceremony of the Lord of War" 1
+cost              4   5 # 25 Sacrifices, the units this gets you ARE NOT WORTH 25 sacs.
+
+selectritual     "Ceremony of the Lord of Death"
+cost              4   5 # 25 Sacrifices, the units this gets you ARE NOT WORTH 25 sacs.
+
+selectritual     "Ceremony of the Lord of Death" 1
+cost              4   5 # 25 Sacrifices, the units this gets you ARE NOT WORTH 25 sacs.
+
+selectritual     "Ceremony of the Lord of Night"
+cost              4   5 # 25 Sacrifices
+
+selectritual     "Ceremony of the Lord of Night" 1
+cost              4   5 # 25 Sacrifices
+
+selectritual     "Ceremony of the Bloody Mother"
+cost              4   10 # 25 Sacrifices
+
+selectritual     "Ceremony of the Bloody Mother" 1
+cost              4   10 # 25 Sacrifices
+
+newweapon     "Stellar Bolt[NERFED]"
+trgrank              9 # Target: any enemy in range.
+range               12
+init                 4
+dmgtype              7 # Magic.
+dmg                  0 # Base damage (added to dmg value where this weapon is used).
+aoe                  0 # Area: single target.
+look                28
+sound               70 # echo.wav
+
+selectmonster    "Tzitzimitl" 
+clearweapons
+rangedweapon               8 "Stellar Bolt[NERFED]" # Stellar Bolt: d8 Magic damage.
+meleeweapon               14  12 # Claw: d14 Slash damage.
+
+#summon god rituals
+selectritual     "Summon God"
+cost              4 100 # kills the caster so the cost is wrapped up in getting the t3 caster
+selectritual     "Summon God" 1
+cost              4 100 # kills the caster so the cost is wrapped up in getting the t3 caster 
+selectritual     "Summon God" 2
+cost              4 100 # kills the caster so the cost is wrapped up in getting the t3 caster 
+selectritual     "Summon God" 3
+cost              4 100 # kills the caster so the cost is wrapped up in getting the t3 caster 
+selectritual     "Summon God" 4
+cost              4 100 # kills the caster so the cost is wrapped up in getting the t3 caster 
+selectritual     "Summon God" 5
+cost              4 100 # kills the caster so the cost is wrapped up in getting the t3 caster 
+selectritual     "Summon God" 6
+cost              4 100 # kills the caster so the cost is wrapped up in getting the t3 caster 
+selectritual     "Summon God" 7
+cost              4 100 # kills the caster so the cost is wrapped up in getting the t3 caster  
+
+# Troll King
+# initially: 0g 0i 0t 0f; zilch
+# now: 5g 1i 05 0f;  1 village 1 iron bog
+# initially: 10 goblins
+# now: 10 archers added
+
+selectclass   14 # troll king
+
+clearstartterr
+addstartterr  18 # village
+addstartterr  97 # iron bog
+
+clearstartunits
+addstartunits "Shadow Tree" 1
+addstartunits "Goblin"              10
+addstartunits "Goblin Archer"       10
+addstartcom   "Goblin Shaman"
+
+clearrec
+#                                               % No gold die iron
+addunitrec  "Goblin"                          100 15   25   0    0
+addunitrec  "Ogre"                            100  1   25   0    0
+addunitrec  "Goblin Spearman"                  40 15   25   0    0 # once per offer.
+addunitrec  "Goblin Archer"                    20 10   35   0    0 # once per offer.
+addunitrec  "Wolf Kin"                         20 10   35   0    0 # once per offer.
+addunitrec  "Wolf Kin Reaver"                  20  7   35   0   10 # once per offer.
+addunitrec  "Rock Troll"                       20  1   50   0   30 # once per offer.
+addunitrec  "Troll"                            30  1   50   0   20 # once per offer.
+addunitrec  "Forest Troll"                     30  1   35   0   10 # once per offer.
+addunitrec  "Lake Troll"                       30  1   40   0   10 # once per offer.
+recterr     -102                              # The preceding offer can only be recruited in terrain: near fresh water.
+addunitrec  "Lake Troll Warrior"               20  1   50   0   20 # once per offer.
+reclimiter  "+Lake Troll King"                # Owning a Lake Troll King enables the preceding offer.
+recterr     -102                              # The preceding offer can only be recruited in terrain: near fresh water.
+addunitrec  "Hill Giant"                        5  1   70   0    0 # once per offer.
+addunitrec  "Ettin"                             8  1   50   0    0 # once per offer.
+addcomrec   "Goblin Chieftain"                  7      25  20    0 # once per offer; extra.
+addcomrec   "Ogre Chief"                        3      35  20    0 # once per offer; extra.
+addcomrec   "Forest Giant"                      5      65  20    0 # once per offer; extra.
+addcomrec   "Goblin Shaman"                     4      35  20    0 # once per offer; extra.
+templerec                                     # +3% to chance per temple owned, to a max of +15% for 5+ temples.
+addcomrec   "Troll Shaman"                      2      75  50    0 # once per offer; extra.
+templerec                                     # +2% to chance per temple owned, to a max of +10% for 5+ temples.
+addcomrec   "Lake Troll King"                   1      75  50    0 # once per offer; extra.
+libraryrec                                    # +1% to chance per library point owned, to a max of +10% for 10+ library points.
+recterr     -102                              # The preceding offer can only be recruited in terrain: near fresh water.
+addmercrec  "Goblin Murderer"                   3  1   10  40    0 # once per offer; extra.
+addcomrec   "Goblin Hero"                       3      10  50    0 # once per offer; extra.
+
+selectritual     "Wither Wood"
+cost              3   1 # 25 Fungus
+
+selectritual     "Vision Brew"
+cost              3   5 # 50 Fungus
+
+selectritual     "Plant Giant Fungus" 
+cost              3   5 # 50 Fungus
+
+selectritual     "Plant Shadow Tree"
+cost              3   10 # 75 Fungus
+
+selectritual     "Call the Old Forest"
+cost              3  50 # 150 Fungus
+
+selectritual     "Golden Nose"
+cost              3  20 # 100 Fungus
+
+selectritual     "Summon Linnorm"
+cost              3 600 # 1000 Fungus
+cost              0 70 # 100 Gold
+
+selectritual     "Summon Orm"
+cost              3  450 # 750 Fungus
+
+selectritual     "Stygian Bath"
+cost              3  300 # 750 Fungus
+
+
+# Enchanter
+# initially: 4g 2i 0t ; 2 coal mines
+# this guy needs money and iron bad. he has a huge industry thing going on
+# now: 10g 3i 1t; 1 village 1 coal mine 1 iron mine
+# initially: 10 swordsmen 3 crossbowmen
+# now: crossbowmen to 10
+
+selectclass   15 # enchanter
+
+clearstartterr
+addstartterr  18 # village
+addstartterr  14 # iron mine
+addstartterr 105 # coal mine
+
+clearstartunits
+addstartcom   "Enchanter's Apprentice"
+addstartunits "Swordsman"           10
+addstartunits "Crossbowman"         10
+
+#THIS ABSULUTE BS IS TO CHANGE AP COSTS... fucking absured I have to do this...
+selectritual     "Animate Sword"
+level 9
+selectritual     "Animate Bow"
+level 9
+selectritual     "Animate Spear"
+level 9
+selectritual     "Animate Armor"
+level 9
+selectritual     "Craft Gargoyle"
+level 9
+selectritual     "Create Flesh Golem"
+level 9
+selectritual     "Sculpt Terracotta Soldier"
+level 9
+selectritual     "Animate Tools"
+level 9
+selectritual     "Create Mimic"
+level 9
+selectritual     "Craft Guardian"
+level 9
+selectritual     "Create Necrotod"
+level 9
+selectritual     "Create Wood Golem"
+level 9
+selectritual     "Create Stone Golem"
+level 9
+selectritual     "Create Ice Golem"
+level 9
+selectritual     "Create Clay Golem"
+level 9
+selectritual     "Enliven Statue"
+level 9
+selectritual     "Iron Grafting"
+level 9
+selectritual     "Animate Quills and Scrolls" 
+level 9
+selectritual     "Animate Ballista"
+level 9
+selectritual     "Dogs of Gold and Silver"
+level 9
+selectritual     "Create Juggernaut"
+level 9
+selectritual     "Create Oak Golem"
+level 9
+selectritual     "Create Iron Golem"
+level 9
+selectritual     "Create Onyx Golem"
+level 9
+selectritual     "Create Crystal Golem"
+level 9
+selectritual     "Create Silver Golem"
+level 9
+selectritual     "Create Gold Golem"
+level 9
+selectritual     "Create Home Portal"
+level 9
+selectritual     "Create Portal"
+level 9
+selectritual     "Infuse Magic Library" 
+level 9
+selectritual     "Infuse Magic Academy"
+level 9
+selectritual     "Brass Bull"
+level 9
+
+
+newritual     "Animate Sword"                                             #  44
+descr "A sword that is enchanted with this ritual will become alive, almost.  It will float in the air and obey simple orders from the Enchanter or his other commanders.  The ritual can only be cast in fortresses and similar locations where there are plenty of suitable swords to enchant."
+ritpow                11 # Enchantment
+level                  1
+cost              1    1 # 1 Iron
+terr                  -9 # Required terrain: castles (rec + walls).
+summoning                # The ritual will summon the monsters specified in a random string.
+aialways              75 # Extra 75% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+aiweakonly           200 # AI commander will only cast this ritual if his troop strength is below this value. One spearman gives 10 troop strength points.
+aiapprspam           100 # 100% chance that AI will dedicate apprentices to stay at home and only spam this ritual.
+addstring     "Dancing Sword"
+
+
+newritual     "Animate Bow"                                               #  45
+descr "A bow that is enchanted with this ritual will become alive, almost.  It will float in the air and obey simple orders from the Enchanter or his other commanders.  The ritual can only be cast in fortresses and similar locations where there are plenty of suitable bows to enchant."
+ritpow                11 # Enchantment
+level                  1
+cost              1    1 # 1 Iron
+terr                  -9 # Required terrain: castles (rec + walls).
+summoning                # The ritual will summon the monsters specified in a random string.
+aialways              75 # Extra 75% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+aiweakonly           200 # AI commander will only cast this ritual if his troop strength is below this value. One spearman gives 10 troop strength points.
+aiapprspam           100 # 100% chance that AI will dedicate apprentices to stay at home and only spam this ritual.
+addstring     "Living Bow"
+
+
+newritual     "Animate Spear"                                             #  46
+descr "A spear that is enchanted with this ritual will become alive, almost.  It will float in the air and obey simple orders from the Enchanter or his other commanders.  The ritual can only be cast in fortresses and similar locations where there are plenty of suitable spears to enchant."
+ritpow                11 # Enchantment
+level                  1
+cost              1    1 # 1 Iron
+terr                  -9 # Required terrain: castles (rec + walls).
+summoning                # The ritual will summon the monsters specified in a random string.
+aialways              90 # Extra 90% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+aiweakonly           200 # AI commander will only cast this ritual if his troop strength is below this value. One spearman gives 10 troop strength points.
+aiapprspam           100 # 100% chance that AI will dedicate apprentices to stay at home and only spam this ritual.
+addstring     "2*Dancing Spear"
+start
+
+newritual     "Animate Armor"                                             #  47
+descr "This ritual makes a full plate armor come to life and it will be able to obey simple commands from the Enchanter.  The ritual can only be cast in fortresses and similar locations where there are plenty of suitable sets of armor to enchant."
+ritpow                11 # Enchantment
+level                  1
+cost              1   5 # 10 Iron
+terr                  -9 # Required terrain: castles (rec + walls).
+summoning                # The ritual will summon the monsters specified in a random string.
+aialways              50 # Extra 50% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+addstring     "Animated Armor"
+
+
+newritual     "Craft Gargoyle"                                            #  48
+descr "The Enchanter crafts a Gargoyle from ordinary earth and brings it to life with a complex ritual.  This ritual is both time consuming and expensive, but the gargoyle is a solid construct that is difficult to harm in combat."
+ritpow                11 # Enchantment
+level                  1
+cost              0    5 # 5 Gold
+cost              1    5 # 5 Iron
+terr                 -94 # Required terrain: temples and fortified locations.
+summoning                # The ritual will summon the monsters specified in a random string.
+# fx1100               2 # Likely an undocumented AI tip related to stationary defenses.
+aialways              20 # Extra 20% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+addstring     "Gargoyle"
+start
+
+newritual     "Create Flesh Golem"                                        #  49
+descr "By taking five random corpses and stitching them together into one large humanoid being the Enchanter can create a Flesh Golem.  The creation of a Flesh Golem is relatively quick and inexpensive, but it is not nearly as powerful as golems made out of more solid materials."
+ritpow                11 # Enchantment
+level                  1
+cost              0    5 # 5 Gold
+cost             14    5 # 5 Corpses (humanoid)
+summoning                # The ritual will summon the monsters specified in a random string.
+aialways              50 # Extra 50% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+addstring     "Flesh Golem"
+
+
+newritual     "Sculpt Terracotta Soldier"                                 #  50
+descr "The Enchanter forms a soldier out of mud and brings it to life with a simple enchantment.  The process takes a long time, but it does not require any resources other than large quantities of mud."
+ritpow                11 # Enchantment
+level                  1
+terr                 -20 # Required terrain: swamp/bog.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr            8 # % chance of destroying the terrain.
+aialways             999 # AI will always try to cast this ritual, and make long term plans to do so.
+aiweakonly           400 # AI commander will only cast this ritual if his troop strength is below this value. One spearman gives 10 troop strength points.
+addstring     "Terracotta Soldier"
+start
+
+newritual     "Animate Tools"                                             #  51
+descr "The enchanter makes a cartload full of tools come alive.  The tools will float and dance in the air and obey simple orders from anyone that wants their help cleaning a house, fetching water, thatching roofs or repairing broken carts.  The ritual is quite time consuming and can only be cast where people work and live.  If cast in a mine, mining tools are created.  The animated tools will increase gold and iron output from the settlement.  The enchantment animating the tools is local and the tools can't leave their place of creation."
+ritpow                11 # Enchantment
+level                  1
+cost              1   10 # 10 Iron
+terr                 -58 # Required terrain: gold income.
+summoning                # The ritual will summon the monsters specified in a random string.
+aialways              30 # Extra 30% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+aiweakonly           500 # AI commander will only cast this ritual if his troop strength is below this value. One spearman gives 10 troop strength points.
+addstring     "(-112)Dancing Tools"     # This string will only be included in terrain: non-iron producing terrains.
+addstring     "(-111)Animated Tools"     # This string will only be included in terrain: iron producing terrains.
+start
+
+newritual     "Create Mimic"                                              #  52
+descr "Even though an Enchanter could create a Mimic from just about any furniture, the chest is usually the preferred piece of furniture to use. This gives the mimic a very large mouth with which it can attack its prey and chests are also exceedingly good at drawing the attention of any would-be raiders. It is possible to tell a Mimic apart from an ordinary piece of furniture by touching it, as it is quite slimy. The slime is sticky and will make it difficult to move and escape from the Mimic, even though a chest shape is badly suited for movement."
+ritpow                11 # Enchantment
+level                  1
+cost              0    5 # 5 Gold
+cost              1    5 # 5 Iron
+terr                 -24 # Required terrain: villages and smaller settlements.
+summoning                # The ritual will summon the monsters specified in a random string.
+nomonreq                 # Monsters in strings beginning with "(-)" must not be here.
+aialways              40 # Extra 40% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+addstring     "(-)Mimic"     # This string will only be used by nomon[...] commands.
+addstring     "Mimic"
+start
+
+newritual     "Craft Guardian"                                            #  53
+descr "With this ritual the Enchanter creates an immobile Guardian statue. The Guardian sees everything and blasts unwanted intruders with lightning."
+ritpow                11 # Enchantment
+level                  2
+cost              0   15 # 15 Gold
+cost              1    5 # 5 Iron
+terr                 -42 # Required terrain: any land.
+summoning                # The ritual will summon the monsters specified in a random string.
+# fx1100               2 # Likely an undocumented AI tip related to stationary defenses.
+aialways              40 # Extra 40% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+addstring     "Guardian"
+
+
+newritual     "Create Necrotod"                                           #  54
+descr "The bones of ten corpses are gathered together to form the Necrotod, an animated snake made of bones.  In addition to the corpses, the ritual requires a fair bit of gold and much time to perform."
+ritpow                11 # Enchantment
+level                  2
+cost              0   35 # 35 Gold
+cost             17   10 # 10 Corpses
+terr                 -42 # Required terrain: any land.
+summoning                # The ritual will summon the monsters specified in a random string.
+aialways              75 # Extra 75% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+addstring     "Necrotod"
+
+
+newritual     "Create Wood Golem"                                         #  55
+descr "This enchantment chops down a small forest and builds a huge wood golem out of the best trees.  The ritual can be performed in both northern forests and southern jungles, but the ancient forests are able to resist the effect.  As with most golem creations, the process is both time consuming and expensive."
+ritpow                11 # Enchantment
+level                  2
+cost              0   20 # 20 Gold
+cost              1   20 # 20 Iron
+terr                 -38 # Required terrain: forest/jungle (not ancient forest).
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr          100 # % chance of destroying the terrain.
+start                    # Start with this ritual instead of the others.
+addstring     "Wood Golem"
+
+
+newritual     "Create Stone Golem"                                        #  56
+descr "This enchantment consumes the hidden power inherent in a coal mine and makes the mine rise as a Stone Golem.  Stone Golems are both huge and made out of stone, which makes them almost impossible to destroy with ordinary weapons.  As with most golem creations, the process is both time consuming and expensive."
+ritpow                11 # Enchantment
+level                  2
+cost              0   40 # 40 Gold
+cost              1   40 # 40 Iron
+terr                 105 # Required terrain: Coal Mine.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr          100 # % chance of destroying the terrain.
+start                    # Start with this ritual instead of the others.
+addstring     "Stone Golem"
+
+
+newritual     "Create Ice Golem"                                          #  57
+descr "This ritual transforms the ice of a frozen freshwater lake into a huge Ice Golem. Ice Golems can only be made where and when it is cold, because the water must be frozen.  As with most golem creations, the process is both time consuming and expensive."
+ritpow                11 # Enchantment
+level                  2
+cost              0   50 # 50 Gold
+cost              1   50 # 50 Iron
+terr                 132 # Required terrain: Frozen Lake.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr          100 # % chance of destroying the terrain.
+aialways             100 # AI will always try to cast this ritual if it currently can, but it will not make long term plans to do so.
+start                    # Start with this ritual instead of the others.
+addstring     "Ice Golem"
+
+
+newritual     "Create Clay Golem"                                         #  58
+descr "This ritual transforms a swamp into a mighty Clay Golem.  Clay Golems retain some of the volatile property of mud and any wounds they suffer will close almost instantly.  As with most golem creations, the process is both time consuming and expensive."
+ritpow                11 # Enchantment
+level                  2
+cost              0   50 # 50 Gold
+cost              1   50 # 50 Iron
+terr                 -20 # Required terrain: swamp/bog.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr          100 # % chance of destroying the terrain.
+start                    # Start with this ritual instead of the others.
+addstring     "Clay Golem"
+
+
+newritual     "Enliven Statue"                                            #  59
+descr "With this ritual the Enchanter will bring a humanlike statue to life and make it obey simple orders.  The ritual can only be performed in temples where there is an ample supply of statues and each casting of this ritual has a chance of destroying the temple."
+ritpow                11 # Enchantment
+level                  2
+terr                  39 # Required terrain: Ancient Temple.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr            8 # % chance of destroying the terrain.
+aialways             999 # AI will always try to cast this ritual, and make long term plans to do so.
+aiweakonly           400 # AI commander will only cast this ritual if his troop strength is below this value. One spearman gives 10 troop strength points.
+addstring     "Animated Statue"
+start
+
+newritual     "Iron Grafting"                                             #  61
+descr "This ritual puts armored plates on a Flesh Golem and replaces the Golem's hands with iron weapons."
+ritpow                11 # Enchantment
+level                  2
+cost              1   10 # 10 Iron
+promotion              1 # Promote 1 unit and make it the target unit. Valid promotions are in paired strings not beginning with "(+)", "(-)", "(&)", or "|".
+aialways              50 # Extra 50% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+addstring     "Flesh Golem"
+addstring     "Iron Grafted Golem"
+start
+
+newritual     "Animate Quills and Scrolls"                                #  62
+descr "The enchanter makes a chest full of quills, ink pots and scrolls come alive.  The quills will float and dance in the air and obey simple orders from anyone that wants their help accounting, documenting trade contracts and writing autobiographies.  The ritual is quite time consuming and can only be cast where people work and live.  The animated tools will increase the trade gained from the settlement by +1, up to double the original value.  The enchantment animating the quills is local and they can't leave their place of creation."
+ritpow                11 # Enchantment
+level                  2
+cost              0   10 # 10 Gold
+terr                 -92 # Required terrain: trade locations.
+summoning                # The ritual will summon the monsters specified in a random string.
+aialways              20 # Extra 20% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+aiweakonly           200 # AI commander will only cast this ritual if his troop strength is below this value. One spearman gives 10 troop strength points.
+addstring     "Flying Quills and Scrolls"
+
+
+newritual     "Animate Ballista"                                          #  63
+descr "This ritual makes a ballista come to life.  The animated ballista floats in the air and no longer needs a stand.  It therefore moves as fast as regular armies.  It reloads itself and has a higher rate of fire than ordinary ballistas.  The ritual can only be cast in fortresses and similar locations where there are suitable parts available."
+ritpow                11 # Enchantment
+level                  2
+cost              1   25 # 25 Iron
+terr                  -9 # Required terrain: castles (rec + walls).
+summoning                # The ritual will summon the monsters specified in a random string.
+aialways              80 # Extra 80% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+addstring     "Animated Ballista"
+
+
+newritual     "Dogs of Gold and Silver"                                   #  64
+descr "The enchanter creates two magnificent dogs of gold and silver and grants them false life. The dogs are excellent trackers and have acute senses. The dog of silver will swiftly attack enemies, while the dog of gold will stay close to its creator and defend him from harm."
+ritpow                11 # Enchantment
+level                  2
+cost              0   20 # 50 Gold
+cost              1   10 # 10 Iron
+terr                 -42 # Required terrain: any land.
+summoning                # The ritual will summon the monsters specified in a random string.
+airare                 5 # Only 5% of normal chance that AI will cast this ritual.
+addstring     "Dog of Gold & Dog of Silver"
+
+
+newritual     "Create Juggernaut"                                         #  65
+descr "The enchanter plunders an ancient temple and uses the sacred statues and ritual paraphernalia of the temple to create a huge shrine on wheels and give it sentience and mobility. The juggernaut, like most messengers of the divine, wanders around on its own whims and attracts followers who search for religious guidance."
+ritpow                11 # Enchantment
+level                  2
+cost              0   50 # 50 Gold
+terr                  39 # Required terrain: Ancient Temple.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr          100 # % chance of destroying the terrain.
+addstring     "c*Juggernaut"
+start
+
+newritual     "Create Oak Golem"                                          #  66
+descr "This ritual consumes an ancient forest in order to create a powerful Oak Golem.  Only ancient forests have the power required to create an Oak Golem and the process is also time consuming and expensive."
+ritpow                11 # Enchantment
+level                  3
+cost              0   40 # 40 Gold
+cost              1   40 # 40 Iron
+terr                   4 # Required terrain: Ancient Forest.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr          100 # % chance of destroying the terrain.
+start                    # Start with this ritual instead of the others.
+addstring     "Oak Golem"
+
+
+newritual     "Create Iron Golem"                                         #  67
+descr "This enchantment consumes the hidden power inherent in an iron mine and makes the mine rise as an Iron Golem.  Iron Golems are both huge and made of iron, which makes them just about impossible to destroy.  As with all powerful golem creations, the process is both time consuming and expensive."
+ritpow                11 # Enchantment
+level                  3
+cost              0   60 # 60 Gold
+cost              1   60 # 60 Iron
+terr                  14 # Required terrain: Iron Mine.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr          100 # % chance of destroying the terrain.
+start                    # Start with this ritual instead of the others.
+addstring     "Iron Golem"
+
+
+newritual     "Create Onyx Golem"                                         #  68
+descr "This enchantment consumes the hidden power inherent in a gold stream and makes the surrounding mountain rise as an Onyx Golem.  Onyx Golems are huge and made of onyx, which makes them almost impossible to destroy.  As with all powerful golem creations, the process is both time consuming and expensive."
+ritpow                11 # Enchantment
+level                  3
+cost              0   70 # 70 Gold
+cost              1   70 # 70 Iron
+terr                  33 # Required terrain: Gold Stream.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr          100 # % chance of destroying the terrain.
+start                    # Start with this ritual instead of the others.
+addstring     "Onyx Golem"
+
+
+newritual     "Create Crystal Golem"                                      #  69
+descr "This enchantment consumes the hidden power inherent in crystal deposits and makes the crystals fuse together and rise as a Crystal Golem.  Crystal Golems are huge and made of crystal, which makes them very difficult to destroy.  As with all powerful golem creations, the process is both time consuming and expensive."
+ritpow                11 # Enchantment
+level                  3
+cost              0   80 # 80 Gold
+cost              1   80 # 80 Iron
+terr                 -30 # Required terrain: gemdeposits/crystals.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr          100 # % chance of destroying the terrain.
+start                    # Start with this ritual instead of the others.
+addstring     "Crystal Golem"
+
+
+newritual     "Create Silver Golem"                                       #  70
+descr "This enchantment consumes the hidden power inherent in a silver mine and makes the mine rise as a Silver Golem.  Silver Golems are both huge and made of silver, which makes them just about impossible to destroy.  As with all powerful golem creations, the process is both time consuming and expensive."
+ritpow                11 # Enchantment
+level                  3
+cost              0   90 # 90 Gold
+cost              1   90 # 90 Iron
+terr                  15 # Required terrain: Silver Mine.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr          100 # % chance of destroying the terrain.
+start                    # Start with this ritual instead of the others.
+addstring     "Silver Golem"
+
+
+newritual     "Create Gold Golem"                                         #  71
+descr "This enchantment consumes the hidden power inherent in a gold mine and makes the mine rise as a Gold Golem.  Gold Golems are both huge and made of gold, which makes them both nearly impossible to destroy and extremely valuable.  As with all powerful golem creations, the process is both time consuming and expensive."
+ritpow                11 # Enchantment
+level                  3
+cost              0  100 # 100 Gold
+cost              1  100 # 100 Iron
+terr                  34 # Required terrain: Gold Mine.
+summoning                # The ritual will summon the monsters specified in a random string.
+destroyterr          100 # % chance of destroying the terrain.
+start                    # Start with this ritual instead of the others.
+addstring     "c*Gold Golem"
+
+
+newritual     "Create Home Portal"                                        #  72
+descr "The Enchanter is able to create a permanent portal through which armies can cross vast distances instantly.  This ritual creates the home portal, which must be placed in the home citadel.  After creating the home portal, further portals can be placed wherever the enchanter happens to be.  The portals can be used by enemies as well and other Enchanters share the same portal space and will be able to go from their portals to another Enchanter's portals."
+ritpow                11 # Enchantment
+level                  3
+cost              0   60 # 60 Gold
+cost              1   60 # 60 Iron
+terr                 110 # Required terrain: Crystal Tower.
+makeportal             2 # Makes a portal at target location with the portal number 2. Portals with the same number link to each other.
+soundfx               57 # Sound effect when the ritual is cast: orchhit.smp (Summoning).
+noportalreq            1 # Ritual cannot be cast if the location already contains a portal.
+start                  # Learn the next ritual too when learning this one.
+
+
+newritual     "Create Portal"                                             #  73
+descr "The Enchanter is able to create a permanent portal through which armies can cross vast distances instantly.  This ritual creates one such portal.  The portals can be used by enemies as well and other Enchanters share the same portal space and will be able to go from their portals to another Enchanter's portals."
+ritpow                11 # Enchantment
+level                  3
+cost              0   60 # 60 Gold
+cost              1   60 # 60 Iron
+terr                 -42 # Required terrain: any land.
+makeportal             2 # Makes a portal at target location with the portal number 2. Portals with the same number link to each other.
+soundfx               57 # Sound effect when the ritual is cast: orchhit.smp (Summoning).
+hasportalreq           2 # Must own a portal with this number: 2.
+noportalreq            1 # Ritual cannot be cast if the location already contains a portal.
+nostart                  # Never start with this ritual, and it cannot be learned by mastery rituals. It can be learned via the gainrit or nexttoo commands.
+start
+
+newritual     "Infuse Magic Library"                                      #  74
+descr "The enchanter enchants the very books in an entire library and gives them awareness.  The collective awareness and lore of the books are then transferred to a more suitable vessel, one of the enchanter's metal golems.  The library takes charge of its metal vessel, but will continue to serve the enchanter as a mage commander of his golem armies.  The library-commanded golem is no longer mindless, but it does not sleep and it has yet to encounter fear.  The library is able to cast metal arcana depending on its golem vessel's body."
+ritpow                11 # Enchantment
+level                  3
+cost              0   50 # 50 Gold
+cost              1   50 # 50 Iron
+terr                 -56 # Required terrain: level 2 libraries.
+destroyterr          100 # % chance of destroying the terrain.
+promotion             -1 # Promote 1 unit to a commander and make it the target unit. Valid promotions are in paired strings not beginning with "(+)", "(-)", "(&)", or "|".
+nexttoo                  # Learn the next ritual too when learning this one.
+addstring     "Gold Golem"
+addstring     "Vessel of Golden Lore"
+addstring     "Silver Golem"
+addstring     "Vessel of Silver Lore"
+addstring     "Iron Golem"
+addstring     "Vessel of Iron Lore"
+start
+
+newritual     "Infuse Magic Academy"                                      #  75
+descr "The enchanter enchants the very books in an entire Academy of High Magics and gives them awareness.  The collective awareness and lore of the books are then transferred to a more suitable vessel, one of the enchanter's metal golems.  The academy takes charge of its metal vessel, but will continue to serve the enchanter as a mage commander of his golem armies.  The academy-commanded golem is no longer mindless, but it does not sleep and it has yet to encounter fear.  The academy is able to cast powerful metal arcana depending on its golem vessel's body."
+ritpow                11 # Enchantment
+level                  3
+cost              0  100 # 100 Gold
+cost              1  100 # 100 Iron
+terr                 -57 # Required terrain: level 3 libraries.
+destroyterr          100 # % chance of destroying the terrain.
+promotion             -1 # Promote 1 unit to a commander and make it the target unit. Valid promotions are in paired strings not beginning with "(+)", "(-)", "(&)", or "|".
+                  # Never start with this ritual, and it cannot be learned by mastery rituals. It can be learned via the gainrit or nexttoo commands.
+addstring     "Gold Golem"
+addstring     "Vessel of Golden Arcana"
+addstring     "Silver Golem"
+addstring     "Vessel of Silver Arcana"
+addstring     "Iron Golem"
+addstring     "Vessel of Iron Arcana"
+start
+
+newritual     "Brass Bull"                                                #  76
+descr "The enchanter creates a huge bull of cast brass and gives it false life. The Brass Bull is almost impervious to normal weapons and its breath is scorching flames."
+ritpow                11 # Enchantment
+level                  3
+cost              0  500 # 500 Gold
+cost              1   50 # 50 Iron
+terr                 -42 # Required terrain: any land.
+summoning                # The ritual will summon the monsters specified in a random string.
+aialways              80 # Extra 80% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+addstring     "Brass Bull"
+start
+
+
+# High Cultist
+# initially: 2g 0i 2t 1s; 1 farm
+# now: 8g 0i 2t 3s; 1 farm 2 coastal hamlets
+# initially: 8 spearmen 5 crossbowmen
+# now: spearmen to 10, crossbowmen to 10
+
+selectclass   19 # high cultist
+
+clearstartterr
+addstartterr   6 # farm
+addstartterr  78 # coastal hamlet
+addstartterr  78 # coastal hamlet
+
+clearstartunits
+addstartcom   "Cultist of the Deep"
+addstartunits "Spearman"            10
+addstartunits "Crossbowman"         10
+
+
+# Dwarf Queen
+# initially: 6g 6i 0t 2diamonds 1emerald; zilch
+# keeping this one simple
+# now: 10g 8i 1t same gems; 1 market village
+# initially: 5 dwarfs 8 workers 2 arbalests
+# now: arbalests replaced with 4 outdoor dwarfs
+
+selectclass   20 # dwarf queen
+
+clearstartterr
+addstartterr 206 # market village
+
+clearstartunits
+addstartcom   "Chosen of Dvalin"
+addstartunits "Dwarf"                5
+addstartunits "Dwarf Worker"         8
+addstartunits "Outdoor Dwarf"        4
+
+selectmonster    "Dwarf Guard"
+clearmove
+mountain
+snow
+
+selectmonster    "Council Guard"
+clearmove
+mountain
+snow
+
+selectmonster    "Furnace Guard"
+clearmove
+mountain
+snow
+
+selectmonster    "Rime Guard"
+clearmove
+mountain
+snow
+
+selectmonster    "Rime Brand Guard"
+clearmove
+mountain
+snow
+
+selectmonster    "Flame Brand Guard"
+clearmove
+mountain
+snow
+
+selectmonster    "Queen's Guard"
+clearmove
+mountain
+snow
+
+clearrec
+addmercrec  "Dwarf"                           100  5    0   0   10
+reclimiter  "=Dwarf Worker"                   # The preceding offer can only be used to upgrade Dwarf Worker unit(s).
+addmercrec  "Dwarf Warrior"                   100  5    0   0   20
+reclimiter  "=Dwarf Worker"                   # The preceding offer can only be used to upgrade Dwarf Worker unit(s).
+addmercrec  "Dwarf Guard"                     100  5    0   0   30
+reclimiter  "=Dwarf Worker"                   # The preceding offer can only be used to upgrade Dwarf Worker unit(s).
+addmercrec  "Dwarf Arbalest"                  100  5    0   0   20
+reclimiter  "=Dwarf Worker"                   # The preceding offer can only be used to upgrade Dwarf Worker unit(s).
+addmercrec  "Outdoor Dwarf"                   100  2    5   0   5
+reclimiter  "=Dwarf Worker"                   # The preceding offer can only be used to upgrade Dwarf Worker unit(s).
+addmercrec  "Dwarf Sapper"                    100  5    0   0   30
+reclimiter  "=Dwarf Worker"                   # The preceding offer can only be used to upgrade Dwarf Worker unit(s).
+addmercrec  "Dwarven Ballista"                100  2    0   0   60
+reclimiter  "=Dwarf Worker"                   # The preceding offer can only be used to upgrade Dwarf Worker unit(s).
+addcomrec   "Dwarf Commander"                 100      20   0   10 # once per offer; extra.
+reclimiter  "=Dwarf Worker"                   # The preceding offer can only be used to upgrade Dwarf Worker unit(s).
+
+selectritual     "Sense Mines"
+cost              9    1 # 5 Diamonds
+
+selectritual     "Create Iron Gate"
+cost             10   1 # 30 Emeralds
+
+selectritual     "Lore of Dvalin I"
+cost              9   1 # 10 Diamonds
+
+selectritual     "Create Rune Smith"
+cost              9   10 # 50 Diamonds
+
+selectritual     "Divine Marriage"
+cost              9   10 # 100 Diamonds
+
+selectritual     "Enchant Gate"
+cost              9   1 # 40 Diamonds
+
+selectritual     "Lore of Dvalin II"
+cost              9   2 # 30 Diamonds
+
+selectritual     "Lore of Dvalin III"
+cost              9   3 # 90 Diamonds
+
+selectritual     "Portal of Dvalin" 
+cost              9   10 # 25 Diamonds
+cost             10   10 # 25 Emeralds
+
+selectritual     "Living Boulders"
+cost              9   5 # 15 Diamonds
+cost             10   5 # 15 Emeralds
+
+selectritual     "Found Colony"
+cost              0   75 # 250 Gold
+cost              1   25 # 50 Iron
+
+selectritual     "Ritual of Mastery" 21
+cost              9   30 # 75 Diamonds
+
+selectritual     "Create Rime Armor"
+cost              8   2 # 20 Sapphires
+
+selectritual     "Create Furnace Armor"
+cost              7   2 # 20 Rubies
+
+selectritual     "Create Armor of Dvalin" 
+cost             10   2 # 20 Emeralds
+
+selectritual     "Rime Brand Weapons"
+cost              8   2 # 20 Sapphires
+
+selectritual     "Flame Brand Weapons" 
+cost              7   2 # 20 Rubies
+
+selectritual     "Earth Brand Weapons"
+cost             10   2 # 20 Emeralds
+
+selectritual     "Rime Brand Ballista"  
+cost              8   5 # 20 Sapphires
+
+selectritual     "Flame Brand Ballista" 
+cost              7   5 # 20 Rubies
+
+selectritual     "Earth Brand Ballista"
+cost             10   5 # 20 Emeralds
+
+# Voice of El
+# initially: 5g 0i 0t 2relics; 1 farm 1 hamlet
+# now: 9g 1i 1t 4relics; 1 farm 1 town 1 abandoned mine
+# initially: 7 halberds 8 spearmen 2 archers
+# now: archers to 8
+
+selectclass   21 # voice of el
+
+clearstartterr
+addstartterr   5 # farm
+addstartterr  17 # town
+addstartterr 332 # abandoned mine
+
+clearstartunits
+addstartcom   "Bishop"
+addstartunits "Halberdier"           7
+addstartunits "Spearman"             8
+addstartunits "Archer"               8
+
+clearrec
+addunitrec  "Spearman"                        100  5   50   0    0
+addunitrec  "Swordsman"                       100  5   50   0   10
+addunitrec  "Archer"                          100  5   50   0    0
+addunitrec  "Pikeneer"                        100  5   50   0    5
+addunitrec  "Halberdier"                      100  5   50   0    5
+addunitrec  "Temple Guard"                    100  5   50   0    5 # Arch Bishop+.
+recxcost    12   1                            #  1 Relics additional cost.
+addunitrec  "Templar"                         100  5   50   0   20 # Cardinal+.
+recxcost    12   5                            #  5 Relics additional cost.
+addunitrec  "Catapult"                        100  1   25   0   50
+addmercrec  "Scout"                            10  1   15  10    0 # once per offer; extra.
+addcomrec   "Bishop"                           10      40  10    0 # once per offer; extra.
+# [nogathererrec]                             # +6% to chance if player doesn't own any unit (with some exceptions) that gathers a special resource.
+templerec                                     # +4% to chance per temple owned, to a max of +20% for 5+ temples.
+
+selectmonster "Bishop"
+more1spells 10
+
+selectmonster "Arch Bishop"
+more1spells 10
+
+selectmonster "Angel"
+clearmove
+flying
+semistupid
+temple2             # Prefers temples
+
+selectmonster "Angelic Warrior"
+clearmove
+flying
+semistupid
+temple2             # Prefers temples
+
+selectmonster "Arch Angel"
+clearmove
+flying
+semistupid
+temple2             # Prefers temples
+
+selectmonster "Celestial Lion"
+clearmove
+flying
+semistupid
+huge
+
+selectmonster "Harbinger"
+clearmove
+flying
+semistupid
+temple2             # Prefers temples
+
+selectmonster "Ophan"
+clearmove
+flying
+semistupid
+temple2             # Prefers temples
+
+selectmonster "Pilgrim"
+clearmove
+semistupid
+
+selectmonster "Saint"
+clearmove
+semistupid
+temple2             # Prefers temples
+money2              # Prefers gold income sites
+
+selectmonster "Seraph"
+clearmove
+flying
+semistupid
+temple2             # Prefers temples
+
+# Illusionist
+# initially: 4g 0i 0t 2gems; zilch
+# now: 7g 1i 1t 3(todo check)gems; 1 market village 1 abandoned mine
+# initially: 10 spearmen 5 archers
+# now: archers to 10
+
+selectclass   22 # illusionist
+
+clearstartterr
+addstartterr 206 # market village
+addstartterr 332 # abandoned mine
+
+clearstartunits
+addstartcom   "Illusionist's Apprentice"
+addstartunits "Spearman"            10
+addstartunits "Archer"              10
+
+selectritual     "Capture Images"
+cost             15   4 # 10 Gems
+
+selectritual     "Capture Spell" 
+cost             15   1 # 5 Gems
+
+selectritual     "Floating Eye"
+cost             15    1 # 5 Gems
+
+selectritual     "Summon Phase Beast"
+cost             15   10 # 25 Gems
+
+selectritual     "Mirror Wall"
+cost             15   10 # 25 Gems
+cost              0   1 # 100 Gold 
+
+
+# Markgraf
+# initially: 6g 0i 1t 1hands; 1 farm 1 hoburg village 1 small graveyard
+# now: 7g 1i 1t 3hands; 1 hoburg village 1 coal mine 1 small graveyard
+# initially: 5 defenders 10 soldiers 10 crossbows
+# now: crossbows to 15
+
+# selectterr     1 # fortified hoburg
+# gold           3 # up from 2
+# hands          1 # up from 0
+# this was actually done up by burgmeister
+
+selectclass   23 # markgraf
+
+clearstartterr
+addstartterr  70 # hoburg village
+addstartterr 105 # coal mine
+addstartterr 248 # small graveyard
+
+clearstartunits
+addstartcom   "Grand Nekromant"
+addstartunits "Hobmark Defender"     5
+addstartunits "Hobmark Soldier"     10
+addstartunits "Hobmark Crossbow"    15
+
+selectritual     "Minor Summoning" 2
+cost              5   5 # 10 Hands
+
+selectritual     "Flesh Rite"
+descr "This ritual turns the Markgraf, Markmeister or Markmann into a Ghoul Baron.  To perform this ritual both the Nekromant and the target commander must be in an Citadel or Graveyard.  The Ghoul Baron is capable of necromancy and can also regain sanity by eating a substantial amount of people."
+cost              5   50 # 50 Hands
+terr                  -35 # Required terrain: Old Castle Ruin.
+
+selectritual     "Create Flesh Golem" 1
+cost              0    6 # 5 Gold
+cost             14    5 # 5 Corpses (humanoid)
+
+selectritual     "Ravenous Curse"
+cost              5   10 # 40 Hands
+
+selectritual     "Animate Abomination" 1
+cost              5   20 
+cost             14   50 # 5 Corpses (humanoid)
+
+# Dryad Queen
+# initially: 1g 0i 0t 7herbs; 1 farm
+# centaur sages gotta live somewhere
+# now: 6g 0i 1t 8herbs: 2 farms 1 town
+# initially: 5 satyr warriors 5 satyr javs
+# now: warriors to 8 javs to 8
+
+selectclass   24 # dryad queen
+
+clearstartterr
+addstartterr   5 # farm
+addstartterr   6 # farm
+addstartterr  17 # town
+
+clearstartunits
+addstartcom   "Satyr Commander"
+addstartunits "Satyr Warrior"        8
+addstartunits "Satyr Javelinist"     8
+
+clearrec
+addmercrec   "Centaur Warrior"                 100  5   25   0    0
+reclimiter  "=Centaur"                        # The preceding offer can only be used to upgrade Centaur unit(s).
+addmercrec   "Centaur Cataphract"              100  5   25   0   10 # not in forest citadels.
+reclimiter  "=Centaur"                        # The preceding offer can only be used to upgrade Centaur unit(s).
+addmercrec   "Steel Cataphract"                100  5   50   0   20 # only in forge citadels.
+reclimiter  "=Centaur"                        # The preceding offer can only be used to upgrade Centaur unit(s).
+addmercrec   "Centauride Warrior"              100  5   25   0    0
+reclimiter  "=Centauride"                     # The preceding offer can only be used to upgrade Centauride unit(s).
+addmercrec   "Centauride Cataphract"           100  5   25   0   10 # not in forest citadels.
+reclimiter  "=Centauride"                     # The preceding offer can only be used to upgrade Centauride unit(s).
+addmercrec   "Centauride Crossbow"             100  5   25   0   15 # only in forge citadels.
+reclimiter  "=Centauride"                     # The preceding offer can only be used to upgrade Centauride unit(s).
+addmercrec   "Satyr Javelinist"                100  5   15   0    0
+reclimiter  "=Satyr"                          # The preceding offer can only be used to upgrade Satyr unit(s).
+addmercrec   "Satyr Warrior"                   100  5   20   0    0
+reclimiter  "=Satyr"                          # The preceding offer can only be used to upgrade Satyr unit(s).
+addmercrec   "Satyr Hoplite"                   100  5   20   0   5 # not in forest citadels.
+reclimiter  "=Satyr"                          # The preceding offer can only be used to upgrade Satyr unit(s).
+addmercrec   "Steel Hoplite"                   100  5   25   0   10 # only in forge citadels.
+reclimiter  "=Satyr"                          # The preceding offer can only be used to upgrade Satyr unit(s).
+addmercrec   "Satyr Sniper"                    100  5   25   0   15 # only in forge citadels.
+reclimiter  "=Satyr"                          # The preceding offer can only be used to upgrade Satyr unit(s).
+addmercrec   "Minotaur Warrior"                100  5   20   0    0
+reclimiter  "=Minotaur"                       # The preceding offer can only be used to upgrade Minotaur unit(s).
+addmercrec   "Bronze Bull"                     100  5   50   0   10 # not in forest citadels.
+reclimiter  "=Minotaur"                       # The preceding offer can only be used to upgrade Minotaur unit(s).
+addmercrec   "Steel Bull"                      100  5   50   0   25 # only in forge citadels.
+reclimiter  "=Minotaur"                       # The preceding offer can only be used to upgrade Minotaur unit(s).
+addmercrec  "Harpy Scout"                      10  1   15  10    0 # once per offer; extra.
+addmercrec   "Stymphalian Bird"                100  5  10   0   5 # not in forest citadels.
+reclimiter  "=Harpy"                          # The preceding offer can only be used to upgrade Harpy unit(s).
+addcomrec   "Satyr Commander"                  10      40  10    0 # once per offer; extra.
+addcomrec   "Hoplite Commander"                 5      40  10    5 # once per offer; extra.
+addcomrec   "Centaur Commander"                 5      50  15    5 # once per offer; extra.
+addcomrec   "Cataphract Commander"              3      50  15   10 # once per offer; extra.
+addcomrec   "Keeper of Traditions"              3      55  20    5 # once per offer; extra.
+addcomrec   "Minotaur Lord"                     2      55  20   10 # once per offer; extra.
+addcomrec   "Hierophant"                        1      65  20    0 # once per offer; extra.
+templerec                                     # +2% to chance per temple owned, to a max of +10% for 5+ temples.
+addcomrec   "Centaur Sage"                      2      65  20    0 # once per offer; extra.
+libraryrec                                    # +1% to chance per library point owned, to a max of +10% for 10+ library points.
+addcomrec   "Hierophantide"                     1      65  20    0 # once per offer; extra.
+templerec                                     # +2% to chance per temple owned, to a max of +10% for 5+ temples.
+addcomrec   "Dryad"                             1      65  20    0 # once per offer; extra.
+templerec                                     
+
+selectritual      "Minor Animal Summoning" 1
+cost              2   25 # 15 Herbs
+
+selectritual     "Create Sacred Grove"
+cost              2  25 # 400 Herbs
+
+selectritual     "Bramble Fort"
+cost              2  5 # 150 Herbs
+
+selectritual     "Major Animal Summoning" 1
+cost              2  50 # 100 Herbs
+
+selectritual     "Create Grove of Gaia" 
+cost              2  50 # 750 Herbs
+
+selectritual     "Call of Gaia"
+cost              2  250# 400 Herbs
+
+selectritual     "Blood Orgy"
+cost              2  10 # 100 Herbs
+
+selectritual        "Plant Hamadryad"
+cost              2  50 # 200 Herbs
+
+selectritual     "Call of the Wild"
+cost              2  400 # 400 Herbs
+
+selectritual     "Create Primal Forest" 
+cost              2  75 # 1000 Herbs
+
+selectmonster "Hamadryad"
+harpyspawn 20
+
+selectmonster "Dryad"
+satyrspawn 10
+
+selectmonster "Dryad Queen"
+satyrspawn 15
+
+selectmonster "Anointed of Gaia"
+satyrspawn 20
+
+selectmonster "Satyr Commander"
+satyrspawn 10
+
+selectmonster "Hoplite Commander"
+satyrspawn 20
+
+selectmonster "Centaur Commander"
+centspawn 10
+selectmonster "Cataphract Commander"
+centspawn 20
+selectmonster "Keeper of Traditions"
+minospawn 10
+selectmonster "Minotaur Lord"
+minospawn 20
+selectmonster "Hierophant"
+centspawn 20
+selectmonster "Centaur Sage"
+centspawn 20
+selectmonster "Hierophantide"
+centspawn 15
+selectmonster "Grand Hierophantide"
+centspawn 20
+selectmonster "Harpy Queen"
+harpyspawn 20
+selectmonster "Pan"
+harpyspawn 10
+satyrspawn 10
+centspawn 5
+minospawn 5
+selectmonster "Elder Pan"
+harpyspawn 15
+satyrspawn 20
+centspawn 5
+minospawn 5
+selectmonster "Pandemoniac"
+harpyspawn 15
+satyrspawn 15
+centspawn 5
+minospawn 15
+selectmonster "Panic Apostate"
+harpyspawn 15
+satyrspawn 20
+centspawn 10
+minospawn 7
+
+# Scourge Lord
+# initially: 5g 0i 1t ?lf; 1 market village 1 pillar of power
+# now: 8g 1i 1t ?lf; 1 market village 1 abandoned mine 1 pillar of power
+# initially: 5 camel riders 8 desert warriors
+# now: camel riders to 8
+
+# selectterr     23 # citadel
+# gold           5 # up from 2
+# this was actually done up by demonologist
+
+selectclass   25 # scourge lord
+
+clearstartterr
+addstartterr 206 # market village
+addstartterr 255 # pillar of power
+
+clearstartunits
+addstartcom   "Scourge Herald"
+addstartunits "Camel Rider"          8
+addstartunits "Desert Warrior"       8
+
+selectritual     "Scourge Summons"
+cost             13   10 # 50 Lifeforce
+
+selectritual     "Pyramid Walls"
+cost             13   5 # 50 Lifeforce
+cost              1   5 # 25 Iron
+
+selectritual     "Construct Guardian"
+cost             13  25 # 100 Lifeforce
+cost              1  5 # 10 Iron
+
+# Cloud Lord
+# initially: 3g 0i 0t 1sapphire 2diamonds; 2 cloud hamlets
+# now: 9g 0i 1t 1sapphire 2diamonds; 2 cloud hamlets 1 cloud village
+# initially: 10 spearmen 5 archers
+# now: archers to 10
+
+selectclass   26 # cloud lord
+
+clearstartterr
+addstartterr 261 # cloud village
+addstartterr 262 # cloud hamlet
+addstartterr 262 # cloud hamlet
+
+clearstartunits
+addstartcom   "Storm Captain"
+addstartunits "Airya Spearman"      10
+addstartunits "Airya Archer"        10
+
+selectritual     "Diamond Alchemy"
+cost              7   5 # 10 Rubies
+cost              8   5 # 10 Sapphires
+cost             10   5 # 10 Emeralds
+
+selectritual     "Lesser Sky Summoning"
+cost              9   5 # 25 Diamonds
+
+selectritual     "Greater Sky Summoning" 
+cost              9   30 # 50 Diamonds
+
+selectritual     "Summon Storm Giant"
+cost              9   50 # 75 Diamonds
+
+selectritual     "Summon Mist Warrior" 2
+cost              9   20 # 25 Diamonds
+cost              8   20 # 25 Sapphires
+
+selectritual     "Rainbow Curtain"
+cost              9   5 # 25 Diamonds
+
+selectritual     "Perpetual Storm" 1
+cost              9  75 # 125 Diamonds
+
+selectritual     "Summon Solar Eagle"
+cost              9   25 # 25 Diamonds
+cost              7   30 # 50 Rubies
+
+selectritual     "Summon Frost Giant"
+cost              8   50 # 75 Sapphires
+
+selectritual     "Castle in the Clouds"
+cost              9  130 # 150 Diamonds
+
+# Kobold King
+# initially: 3g 1i 0t 2gems; zilch
+# who does a nest of kobolds lord over?
+# now: 6g 2i 0t 3gems; 2 farms 1 coal mine
+# initially: 1 drake 20 kobold 10 ranged kobold
+# now: im not gonna try to fuck with their starting units for this mod lol
+
+selectclass   27 # kobold king
+
+clearstartterr
+addstartterr   5 # farm
+addstartterr   6 # farm
+addstartterr 105 # coal mine
+
+selectritual  "Ritual of Mastery" 25
+cost             15  50 # 100 Gems
+selectritual   "Ritual of Grand Mastery" 22
+cost              7  100 # 200 Rubies
+selectritual   "Ritual of Grand Mastery" 23
+cost             10  100 # 200 Emeralds
+selectritual   "Ritual of Grand Mastery" 24
+cost              8  100 # 200 Sapphires
+selectritual   "Ritual of Grand Mastery" 25
+cost              9  100 # 200 Diamonds
+
+selectritual     "Kobold Hatchery"
+cost              0   25 # 50 Gold
+cost              1   10 # 20 Iron
+selectritual     "Kobold Hatchery" 1
+cost              0   25 # 50 Gold
+cost              1   10 # 20 Iron
+selectritual     "Kobold Hatchery" 2
+cost              0   25 # 50 Gold
+cost              1   10 # 20 Iron
+selectritual     "Kobold Hatchery" 3
+cost              0   25 # 50 Gold
+cost              1   10 # 20 Iron
+selectritual     "Kobold Hatchery" 4
+cost              0   25 # 50 Gold
+cost              1   10 # 20 Iron
+
+selectritual     "Kobold Stronghold" 
+cost              0   50 # 50 Gold
+cost              1   30 # 75 Iron
+selectritual     "Kobold Stronghold" 1
+cost              0   50 # 50 Gold
+cost              1   30 # 75 Iron
+selectritual     "Kobold Stronghold" 2
+cost              0   50 # 50 Gold
+cost              1   30 # 75 Iron
+selectritual     "Kobold Stronghold" 3
+cost              0   50 # 50 Gold
+cost              1   30 # 75 Iron
+selectritual     "Kobold Stronghold" 4
+cost              0   50 # 50 Gold
+cost              1   30 # 75 Iron
+
+selectritual     "Decay Rune Trap"
+cost             16    1 # 1 Kobolds
+selectritual     "Flame Rune Trap"
+cost             16    1 # 1 Kobolds
+selectritual     "Poison Gas Trap"
+cost             16    1 # 1 Kobolds
+selectritual     "Frost Rune Trap"
+cost             16    1 # 1 Kobolds
+selectritual     "Lightning Rune Trap" 
+cost             16    1 # 1 Kobolds
+
+selectmonster    "Elder Dragon"
+wandermaxdist             80
+
+selectmonster    "Fire Dragon"
+wandermaxdist 	20
+
+selectmonster    "Bile Dragon"
+wandermaxdist   20
+
+selectmonster    "Frost Dragon" 
+wandermaxdist   20
+
+selectmonster    "Storm Dragon" 
+wandermaxdist   20
+
+selectmonster    "Dusk Dragon" 
+wandermaxdist   20
+
+# Monkey Maharaja
+# initially: 5g 0i 0t 1diamond?; 1 atavi tribe village
+# now: 9g 1t 1diamond; 2 atavi tribe villages
+# initially: 5 vsoldier 5 varcher 10 markata 10 marcher
+# now: 6 6 14 12
+
+selectclass   28 # maharaja
+
+clearstartterr
+addstartterr 348 # atavi tribe village
+addstartterr 348 # atavi tribe village
+
+clearstartunits
+addstartcom   "Yogi"
+addstartcom   "Vanara Captain"
+addstartunits "Vanara Archer"        6
+addstartunits "Vanara Soldier"       6
+addstartunits "Markata"             14
+addstartunits "Markata Archer"      12
+
+selectritual     "Lesser Akashic Summoning"
+cost             15   7 # 30 Gems
+
+selectritual     "Akashic Summoning"
+cost             15  75 # 100 Gems
+
+selectritual     "Greater Akashic Summoning"
+cost             15  125 # 250 Gems
+
+selectritual     "Avatara"
+cost             15  200 # 500 Gems
+
+selectritual     "Ruby Summoning"
+cost              7   7 # 30 Rubies
+
+selectritual     "Host of Maruts" 
+cost              7  60 # 100 Rubies
+
+selectritual     "Sapphire Summoning"
+cost              8   15 # 30 Sapphires
+
+selectritual     "Inhabit Lake"
+cost              8   0 # 20 Sapphires
+
+selectritual     "Emerald Summoning"
+cost             10   7 # 30 Emeralds
+
+selectritual     "Inhabit Jungle"
+cost             10   0 # 20 Emeralds
+
+selectritual     "Diamond Summoning"
+cost              9   10 # 30 Diamonds
+
+selectritual     "Turning of the Wheel"
+cost             15  100 # 500 Gems
+
+# Raksharaja
+# initially: 3g 0i 0t 0s;
+# now: 7g 1t 1s; 1 atavi tribe village
+# initially: 5 awarrior 5 aarcher 10 markata
+# now: 8 7 12
+
+# maharajas palace handled above
+
+selectclass   29 # maharaja
+
+clearstartterr
+addstartterr 348 # atavi tribe village
+
+clearstartunits
+addstartcom   "Atavi Chief"
+addstartunits "Atavi Archer"         8
+addstartunits "Atavi Warrior"        6
+addstartunits "Markata"             12
+
+selectritual     "Naraka Summoning"
+cost              4   10 # 40 Sacrifices
+
+selectritual     "Lanka Summoning"
+cost              4   5 # 30 Sacrifices
+
+selectritual     "Summon the Dead"
+cost              4   20 # 25 Sacrifices
+
+selectritual     "Bhuta Possession"
+cost              4   5
+
+selectritual     "Veil of Dreams" 
+cost              4   5 # 75 Sacrifices
+cost              0   10 # 25 Gold
+
+selectritual     "Veil Mine" 
+cost             15   1 # 20 Gems
+
+selectritual     "Fata Morgana"
+cost             15   5 # 30 Gems
+cost              0   10 # 30 Gold
+
+selectterr    70 # hoburg village
+hands          1 # up from 0
+
+selectterr    25 # temple of el
+gold           4 # up from 2
+
+selectterr     30 # baron's castle
+gold           5 # up from 2
+
+selectterr     24 # dark citadel
+gold           3 # up from 0
+
+selectterr     23 # citadel
+gold           5 # up from 2
+
+selectterr     26 # tower
+gold           3 # up from 0
+
+selectterr     31 # temple of ba'al
+gold           5 # up from 2
+
+selectterr   113 # barbarian camp
+gold           3 # up from 1
+sacr           2
+dead           3 # d6 corpses
+hands          1
+pop           20 # el mechanics tag
+
+selectterr   121 # pale one lair
+gold           3
+iron           3
+
+selectterr     1 # fortified hoburg
+gold           3 # up from 2
+hands          1 # up from 0
+
+selectterr     3 # temple city
+gold           6 # up from 3
+
+selectterr    32 # troll pit
+gold           2 # up from 0
+
+
+selectterr   110 # crystal tower
+gold           4
+trade          1
+
+selectterr   161 # deserted port
+gold           3
+
+selectterr   162 # deserted port
+gold           3
+
+selectterr   163 # deserted port
+gold           3
+
+selectterr   164 # deserted port
+gold           3
+
+selectterr   126 # dwarven city
+gold           4
+iron           4
+
+selectterr    265 # cloud palace
+gold           5 # up from 1
+trade          1 # up from 0
+
+selectterr   114 # maharajas palace
+gold           5 # up from 3
+trade          1 # up from 0
